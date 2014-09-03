@@ -10,11 +10,9 @@ $num_cols = 4;
 
     <? for($row_num = 1; $row_num <= $num_rows; $row_num++): ?>
     <tr>
-
       <? for($col_num = 1; $col_num <= $num_cols; $col_num++): ?>
       <td><?= $col_num ?></td>
       <? endfor ?>
-
     </tr>
     <? endfor ?>
 
