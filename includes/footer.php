@@ -1,8 +1,7 @@
-
-  </div> <!-- .container -->
-  <footer class="footer container text-center">
+</div> <!-- .container -->
+<footer class="footer container text-center">
     The Footer
-  </footer>
+</footer>
 <!-- Scripts -->
 
 </body>

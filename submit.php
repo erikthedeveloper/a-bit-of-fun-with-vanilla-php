@@ -1,6 +1,15 @@
 <?php
 header('Content-Type: application/json');
-echo json_encode($_POST);
 
-mail($to, $subject, $message);
+$send_it = false;
+//$send_it = true;
+
+$to      = $_POST['email'];
+$subject = "Contact Submission: " . $_POST['subject'];
+$message = $_POST['message'];
+
+$sent = $send_it ? mail($to, $subject, $message) : false;
+$data = compact('to', 'subject', 'message', 'sent');
+
+echo json_encode($data);
 ?>

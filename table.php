@@ -3,20 +3,20 @@
 $num_rows = 5;
 $num_cols = 4;
 ?>
-<h1 class="text-center">A Great Table</h1>
-<div class="jumbotron">
-  <!-- The Table -->
-  <table class="table table-striped">
+    <h1 class="text-center">A Great Table</h1>
+    <div class="jumbotron">
+        <!-- The Table -->
+        <table class="table table-striped">
 
-    <? for($row_num = 1; $row_num <= $num_rows; $row_num++): ?>
-    <tr>
-      <? for($col_num = 1; $col_num <= $num_cols; $col_num++): ?>
-      <td><?= $col_num ?></td>
-      <? endfor ?>
-    </tr>
-    <? endfor ?>
+            <? for ($row_num = 1; $row_num <= $num_rows; $row_num++): ?>
+                <tr>
+                    <? for ($col_num = 1; $col_num <= $num_cols; $col_num++): ?>
+                        <td><?= $col_num ?></td>
+                    <? endfor ?>
+                </tr>
+            <? endfor ?>
 
-  </table>
-  <!-- End The Table -->
-</div>
+        </table>
+        <!-- End The Table -->
+    </div>
 <?php require_once 'includes/footer.php' ?>
