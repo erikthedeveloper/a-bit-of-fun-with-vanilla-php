@@ -1,6 +1,6 @@
 <?php require_once 'includes/header.php' ?>
     <div class="jumbotron">
-        <h1>Welcome to Foo</h1>
+        <h1>Welcome <?= $display_user_name ?></h1>
         <blockquote>
             Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptatem nobis similique in fugiat unde.
         </blockquote>
