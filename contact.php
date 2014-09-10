@@ -1,6 +1,5 @@
 <?php
 require_once 'includes/header.php';
-$grid_size = $_GET['grid_size'] ?: 10;
 ?>
     <div class="jumbotron">
         <h1>A Great Contact Form</h1>
