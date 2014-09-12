@@ -24,8 +24,8 @@ if (isset($_POST['pet_id']) && !empty($_POST['pet_id'])) {
 
 foreach ($validate_fields as $key => $pattern) {
     if (!preg_match($pattern, $_POST[$key])) {
-        $_SESSION['flash']['message'] = "Whoops. $key Failed! ";
-        header("Location: /the_form.php");
+        $_SESSION['flash']['message'] = "Whoops. Looks like you forgot to fill in \"$key\"!";
+        header("Location: /register_pet.php");
         exit;
     }
 }
@@ -57,6 +57,6 @@ $success = $pdo_connection->prepare('INSERT INTO people_pets (people_id, pet_id)
 
 // Redirect user
 $_SESSION['flash']['message'] = "Submitted. Whatever.";
-header("Location: /the_form.php");
+header("Location: /register_pet.php");
 
 ?>

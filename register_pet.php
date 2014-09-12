@@ -16,7 +16,7 @@ $pets = $pdo_connection->query("SELECT * FROM pets")->fetchAll();
     <div class="jumbotron">
         <h1>Register Your Pet</h1>
         <?php include "partials/flash_message.php" ?>
-        <form action="the_form_submit.php" method="POST" class="form-horizontal">
+        <form action="register_pet_submit.php" method="POST" class="form-horizontal">
             <div class="form-group">
                 <div class="col-sm-3">
                     <label>First Name</label>
@@ -64,6 +64,8 @@ $pets = $pdo_connection->query("SELECT * FROM pets")->fetchAll();
         </form>
     </div>
 
+
+    <h2>Registered Pets and Owners</h2>
     <table class="table table-striped">
         <tr>
             <th>First Name</th>
