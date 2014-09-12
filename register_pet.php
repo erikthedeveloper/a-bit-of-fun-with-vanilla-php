@@ -7,12 +7,12 @@ LEFT JOIN people
 	ON people.id = people_pets.people_id
 LEFT JOIN pets
 	ON pets.id = people_pets.pet_id
-ORDER BY pet_id";
+ORDER BY last_name";
 
 $owners_with_pets = $pdo_connection->query($sql)->fetchAll();
 
-$people = $pdo_connection->query("SELECT * FROM people")->fetchAll();
-$pets   = $pdo_connection->query("SELECT * FROM pets")->fetchAll();
+$people = $pdo_connection->query("SELECT * FROM people ORDER BY last_name")->fetchAll();
+$pets   = $pdo_connection->query("SELECT * FROM pets ORDER BY name")->fetchAll();
 ?>
     <div class="jumbotron">
         <h1>Register Your Pet</h1>
@@ -71,15 +71,15 @@ $pets   = $pdo_connection->query("SELECT * FROM pets")->fetchAll();
     <h2>Registered Pets and Owners</h2>
     <table class="table table-striped">
         <tr>
-            <th>First Name</th>
             <th>Last Name</th>
+            <th>First Name</th>
             <th>Age</th>
             <th>Pet Name</th>
         </tr>
         <?php foreach ($owners_with_pets as $owner_with_pet): ?>
             <tr>
-                <td><?= $owner_with_pet['first_name'] ?></td>
                 <td><?= $owner_with_pet['last_name'] ?></td>
+                <td><?= $owner_with_pet['first_name'] ?></td>
                 <td><?= $owner_with_pet['age'] ?></td>
                 <td><?= $owner_with_pet['pet_name'] ?></td>
             </tr>

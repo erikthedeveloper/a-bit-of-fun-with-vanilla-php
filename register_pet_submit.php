@@ -7,18 +7,18 @@ require_once 'bootstrap.php';
 // Get form data
 $validate_fields = [
     'first_name' => "/\w+/",
-    'last_name'  => '/\w+/',
-    'age'        => '/\d+/',
-    'pet_name'   => '/\w+/'
+    'last_name'  => "/\w+/",
+    'age'        => "/\d+/",
+    'pet_name'   => "/\w+/"
 ];
 if (isset($_POST['people_id']) && !empty($_POST['people_id'])) {
     $people_id       = (int)$_POST['people_id'];
     $validate_fields = [
-        'pet_name' => '/\w+/'
+        'pet_name' => "/\w+/"
     ];
 }
 if (isset($_POST['pet_id']) && !empty($_POST['pet_id'])) {
-    $pet_id = (int)$_POST['pet_id'];
+    $pet_id = (int) $_POST['pet_id'];
     unset($validate_fields['pet_name']);
 }
 
@@ -39,7 +39,7 @@ $pet_name   = $_POST['pet_name'];
 if (isset($people_id)) {
     // $people_id
 } else {
-    $success   = $pdo_connection->prepare('INSERT INTO people (first_name, last_name) VALUE (?, ?, ?)')
+    $success   = $pdo_connection->prepare('INSERT INTO people (first_name, last_name, age) VALUE (?, ?, ?)')
         ->execute([$first_name, $last_name, $age]);
     $people_id = $pdo_connection->lastInsertId();
 }
