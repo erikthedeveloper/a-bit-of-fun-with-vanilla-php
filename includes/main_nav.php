@@ -19,6 +19,8 @@
             <?php
             $links = [
                 'register_pet.php'   => 'Pet Form',
+                'people.php'         => 'People',
+                'pets.php'           => 'Pets',
                 'table.php'          => 'A Table',
                 'multiplication.php' => 'Multiplication',
                 'contact.php'        => 'Contact Form',
