@@ -5,7 +5,7 @@ include_once 'bootstrap.php';
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title><?= $page['title'] ?></title>
+    <title><?= isset($page['title']) ? $page['title'] : "A Page!" ?></title>
     <!-- Styles -->
     <link rel="stylesheet" media="screen" href="//netdna.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
 </head>

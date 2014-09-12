@@ -1,5 +1,7 @@
 <?php
 require_once 'includes/header.php';
+//$people = [];
+//$pets = [];
 ?>
     <div class="jumbotron">
         <h1>Register Your Pet</h1>
