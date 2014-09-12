@@ -6,7 +6,7 @@ $send_it = false;
 
 $to      = $_POST['email'];
 $name    = $_POST['name'];
-$subject = "Contact Submission: " . $_POST['subject'];
+$subject = "Contact Submission: " . $name;
 $message = $_POST['message'];
 
 $sent = $send_it ? mail($to, $subject, $message) : false;
@@ -14,9 +14,7 @@ $data = compact('to', 'subject', 'message', 'sent');
 
 $_SESSION['user_name'] = $name;
 
-//header('Content-Type: application/json');
-//echo json_encode($data);
-
-header("Location: /");
+header('Content-Type: application/json');
+echo json_encode($data);
 
 ?>

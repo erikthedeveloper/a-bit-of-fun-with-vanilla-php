@@ -1,4 +1,5 @@
 <?php
+$page['title'] = 'Pet Registry';
 require_once 'includes/header.php';
 /** @var PDO $pdo_connection */
 $sql = "SELECT people.id AS owner_id, pets.id AS pet_id, first_name, last_name, age, pets.name AS pet_name FROM people_pets
@@ -11,7 +12,7 @@ ORDER BY pet_id";
 $owners_with_pets = $pdo_connection->query($sql)->fetchAll();
 
 $people = $pdo_connection->query("SELECT * FROM people")->fetchAll();
-$pets = $pdo_connection->query("SELECT * FROM pets")->fetchAll();
+$pets   = $pdo_connection->query("SELECT * FROM pets")->fetchAll();
 ?>
     <div class="jumbotron">
         <h1>Register Your Pet</h1>
@@ -28,14 +29,16 @@ $pets = $pdo_connection->query("SELECT * FROM pets")->fetchAll();
                 </div>
                 <div class="col-sm-2">
                     <label>Age</label>
-                    <input type="number" name="age" placeholder="Your Age" min="18" max="99" value="21" class="form-control input-lg">
+                    <input type="number" name="age" placeholder="Your Age" min="18" max="99" value="21"
+                           class="form-control input-lg">
                 </div>
                 <div class="col-sm-4">
                     <label>Existing Person</label>
                     <select name="people_id" class="form-control input-lg">
                         <option value>or Returning User</option>
                         <?php foreach ($people as $person): ?>
-                            <option value="<?= $person['id'] ?>"><?= $person['last_name'] . ", " . $person['first_name'] . " - " . $person['age'] ?></option>
+                            <option
+                                value="<?= $person['id'] ?>"><?= $person['last_name'] . ", " . $person['first_name'] . " - " . $person['age'] ?></option>
                         <?php endforeach ?>
                     </select>
                 </div>
@@ -51,7 +54,7 @@ $pets = $pdo_connection->query("SELECT * FROM pets")->fetchAll();
                     <select name="pet_id" class="form-control input-lg">
                         <option value>or Existing Pet</option>
                         <?php foreach ($pets as $pet): ?>
-                            <option value="<?= $pet['id'] ?>"><?= $pet['name']?></option>
+                            <option value="<?= $pet['id'] ?>"><?= $pet['name'] ?></option>
                         <?php endforeach ?>
                     </select>
                 </div>
@@ -74,12 +77,12 @@ $pets = $pdo_connection->query("SELECT * FROM pets")->fetchAll();
             <th>Pet Name</th>
         </tr>
         <?php foreach ($owners_with_pets as $owner_with_pet): ?>
-        <tr>
-            <td><?= $owner_with_pet['first_name'] ?></td>
-            <td><?= $owner_with_pet['last_name'] ?></td>
-            <td><?= $owner_with_pet['age'] ?></td>
-            <td><?= $owner_with_pet['pet_name'] ?></td>
-        </tr>
+            <tr>
+                <td><?= $owner_with_pet['first_name'] ?></td>
+                <td><?= $owner_with_pet['last_name'] ?></td>
+                <td><?= $owner_with_pet['age'] ?></td>
+                <td><?= $owner_with_pet['pet_name'] ?></td>
+            </tr>
         <?php endforeach ?>
     </table>
 <?php require_once 'includes/footer.php' ?>

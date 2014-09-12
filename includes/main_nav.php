@@ -18,10 +18,10 @@
             </li>
             <?php
             $links = [
+                'register_pet.php'   => 'Pet Form',
                 'table.php'          => 'A Table',
                 'multiplication.php' => 'Multiplication',
                 'contact.php'        => 'Contact Form',
-                'register_pet.php'       => 'Pet Form'
             ];
             foreach ($links as $href => $link_text): ?>
                 <li class="<?= strpos($_SERVER['REQUEST_URI'], preg_replace('/\.php/', '', $href)) ? 'active' : '' ?>">
