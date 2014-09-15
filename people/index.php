@@ -1,11 +1,12 @@
 <?php
 $page['title'] = 'People';
-require_once '/includes/header.php';
+
+require_once $_SERVER['DOCUMENT_ROOT'] . '/includes/header.php';
 /** @var PDO $pdo_connection */
 $people = $pdo_connection->query("SELECT * FROM people ORDER BY last_name")->fetchAll();
 ?>
 <div class="jumbotron">
-    <h2>People</h2>
+    <h1>All People</h1>
     <table class="table table-striped">
         <tr>
             <th>Last Name</th>
@@ -23,4 +24,4 @@ $people = $pdo_connection->query("SELECT * FROM people ORDER BY last_name")->fet
 </div>
 
 
-<?php require_once 'includes/footer.php' ?>
+<?php require_once $_SERVER['DOCUMENT_ROOT'] . '/includes/footer.php' ?>

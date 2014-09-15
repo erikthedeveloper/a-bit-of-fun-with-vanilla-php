@@ -1,5 +1,5 @@
 <?php
-require_once 'bootstrap.php';
+require_once $_SERVER['DOCUMENT_ROOT'] . '/bootstrap.php';
 /**
  * @var PDO $pdo_connection
  */
@@ -15,7 +15,7 @@ $validate_fields = [
 foreach ($validate_fields as $key => $pattern) {
     if (!preg_match($pattern, $_POST[$key])) {
         $_SESSION['flash']['message'] = "Whoops. Looks like you forgot to fill in \"$key\"!";
-        header("Location: /register_pet.php");
+        header("Location: /people/index.php");
         exit;
     }
 }

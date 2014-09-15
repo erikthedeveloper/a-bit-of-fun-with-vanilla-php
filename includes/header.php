@@ -1,5 +1,5 @@
 <?php
-include_once 'bootstrap.php';
+include_once $_SERVER['DOCUMENT_ROOT'] . '/bootstrap.php';
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -11,5 +11,5 @@ include_once 'bootstrap.php';
     <!--<link rel="stylesheet" media="screen" href="http://bootswatch.com/yeti/bootstrap.css">-->
 </head>
 <body>
-<?php include_once 'includes/main_nav.php' ?>
+<?php include_once $_SERVER['DOCUMENT_ROOT'] . '/includes/main_nav.php' ?>
 <div class="container">

@@ -1,12 +1,12 @@
 <?php
 $page['title'] = 'Pet Registry';
-require_once '/includes/header.php';
+require_once $_SERVER['DOCUMENT_ROOT'] . '/includes/header.php';
 /** @var PDO $pdo_connection */
 $people = $pdo_connection->query("SELECT * FROM people ORDER BY last_name")->fetchAll();
 ?>
 <div class="jumbotron">
-    <h1>Update Yourself</h1>
-    <?php include "partials/flash_message.php" ?>
+    <h1>Edit One</h1>
+    <?php include $_SERVER['DOCUMENT_ROOT'] . "/partials/flash_message.php" ?>
     <form action="register_pet_submit.php" method="POST" class="form-horizontal">
         <div class="form-group">
             <div class="col-sm-3">
@@ -32,4 +32,4 @@ $people = $pdo_connection->query("SELECT * FROM people ORDER BY last_name")->fet
     </form>
 </div>
 
-<?php require_once 'includes/footer.php' ?>
+<?php require_once $_SERVER['DOCUMENT_ROOT'] . '/includes/footer.php' ?>
