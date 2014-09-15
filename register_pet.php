@@ -37,8 +37,7 @@ $pets   = $pdo_connection->query("SELECT * FROM pets ORDER BY name")->fetchAll()
                     <select name="people_id" class="form-control input-lg">
                         <option value>or Returning User</option>
                         <?php foreach ($people as $person): ?>
-                            <option
-                                value="<?= $person['id'] ?>"><?= $person['last_name'] . ", " . $person['first_name'] . " - " . $person['age'] ?></option>
+                            <option value="<?= $person['id'] ?>"><?= $person['last_name'] . ", " . $person['first_name'] . " - " . $person['age'] ?></option>
                         <?php endforeach ?>
                     </select>
                 </div>
