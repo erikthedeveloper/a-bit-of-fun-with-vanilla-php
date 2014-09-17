@@ -8,3 +8,4 @@ foreach ($iter_regex as $class_file) {
     include_once $class_file[0];
 }
 
+\MyClasses\Models\BaseModel::setPdoConnection($pdo_connection);
