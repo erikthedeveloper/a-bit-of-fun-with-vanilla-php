@@ -25,8 +25,7 @@ $last_name  = $_POST['last_name'];
 $age        = $_POST['age'];
 
 // Update User
-$success   = $pdo_connection->prepare('UPDATE `people` SET first_name = :first_name, last_name = :last_name, age = :age WHERE id = :id')
-    ->execute(['first_name' => $first_name, 'last_name' => $last_name, 'age' => $age, 'id' => $person_id]);
+$success = \MyClasses\Models\People::update($person_id, $first_name, $last_name, $age);
 
 // Redirect user
 $success = $success ? "YES" : json_encode($pdo_connection->errorInfo());

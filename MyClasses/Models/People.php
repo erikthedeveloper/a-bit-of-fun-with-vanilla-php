@@ -50,6 +50,20 @@ class People extends BaseModel
 
     /**
      * @param $id
+     * @param $first_name
+     * @param $last_name
+     * @param $age
+     * @return bool
+     * @author Erik Aybar
+     */
+    public static function update($id, $first_name, $last_name, $age){
+        $success   = static::getPdoConnection()->prepare('UPDATE `people` SET first_name = :first_name, last_name = :last_name, age = :age WHERE id = :id')
+            ->execute(['first_name' => $first_name, 'last_name' => $last_name, 'age' => $age, 'id' => $id]);
+        return $success;
+    }
+
+    /**
+     * @param $id
      * @return bool
      * @author Erik Aybar
      */
