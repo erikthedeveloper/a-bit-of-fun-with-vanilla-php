@@ -1,7 +1,7 @@
 <?php require_once $_SERVER['DOCUMENT_ROOT'] . '/bootstrap.php' ?>
 <?php
-$page['title'] = 'Pet Registry';
-echo get_partial('header.php');
+$page['title'] = 'New Person';
+echo get_partial('header.php', ['page' => $page]);
 ?>
 
 <h1>New Person...</h1>

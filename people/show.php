@@ -1,5 +1,4 @@
 <?php require_once $_SERVER['DOCUMENT_ROOT'] . '/bootstrap.php' ?>
-<?= get_partial('header.php') ?>
 <?php
 if (!isset($_GET['id'])) {
     redirect_user('/people/index.php', 'No person found for ID ... or you didn\'t supply one!');
@@ -7,7 +6,9 @@ if (!isset($_GET['id'])) {
 $person_id = $_GET['id'];
 
 $person = \MyClasses\Models\Person::getOne($person_id);
+$page['title'] = 'Show Person';
 ?>
+<?= get_partial('header.php', ['page' => $page]) ?>
 
 <h1><?= $person['first_name'] . " " . $person['last_name'] ?></h1>
 <div class="row">

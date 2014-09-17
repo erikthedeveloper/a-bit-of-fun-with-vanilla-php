@@ -25,7 +25,7 @@ $last_name  = $_POST['last_name'];
 $age        = $_POST['age'];
 
 // Update User
-$success = \MyClasses\Models\Person::update($person_id, $first_name, $last_name, $age);
+$success = \MyClasses\Models\Person::update($person_id, compact('first_name', 'last_name', 'age'));
 
 // Redirect user
 $success = $success ? "YES" : json_encode($pdo_connection->errorInfo());
