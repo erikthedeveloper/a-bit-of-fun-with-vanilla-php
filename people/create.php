@@ -1,8 +1,5 @@
 <?php
 require_once $_SERVER['DOCUMENT_ROOT'] . '/bootstrap.php';
-/**
- * @var PDO $pdo_connection
- */
 
 // Get form data
 $validate_fields = [
@@ -23,10 +20,7 @@ $first_name = $_POST['first_name'];
 $last_name  = $_POST['last_name'];
 $age        = $_POST['age'];
 
-// Insert User
-$success   = $pdo_connection->prepare('INSERT INTO people (first_name, last_name, age) VALUE (?, ?, ?)')
-    ->execute([$first_name, $last_name, $age]);
-$people_id = $pdo_connection->lastInsertId();
+$people_id = \MyClasses\Models\People::create($first_name, $last_name, $age);
 
 // Redirect user
 redirect_user('/people/show.php?id=' . $people_id, "New user. Hooray.");

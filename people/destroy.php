@@ -6,10 +6,8 @@ if (!isset($_GET['id'])) {
 }
 $person_id = $_GET['id'];
 
-/** @var PDO $pdo_connection */
-$statement = $pdo_connection->prepare('DELETE FROM people WHERE id = :id');
-$statement->execute(['id' => $person_id]);
+$destroyed = \MyClasses\Models\People::destroy($person_id);
 
-//redirect_user('/people/index.php', "You. Killed. Him. ...");
+redirect_user('/people/index.php', "You. Killed. Him. ...");
 
 ?>

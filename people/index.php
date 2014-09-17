@@ -2,8 +2,7 @@
 <?php
 $page['title'] = 'People';
 echo get_partial('header.php');
-/** @var PDO $pdo_connection */
-$people = $pdo_connection->query("SELECT * FROM people ORDER BY last_name")->fetchAll();
+$people = \MyClasses\Models\People::getAll();
 ?>
 <div class="jumbotron">
     <h1>All People</h1>

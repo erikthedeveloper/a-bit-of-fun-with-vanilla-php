@@ -6,10 +6,7 @@ if (!isset($_GET['id'])) {
 }
 $person_id = $_GET['id'];
 
-/** @var PDO $pdo_connection */
-$statement = $pdo_connection->prepare('SELECT * FROM people WHERE id = :id');
-$statement->execute(['id' => $person_id]);
-$person = $statement->fetch();
+$person = \MyClasses\Models\People::getOne($person_id);
 ?>
 <div class="jumbotron">
     <h1><?= $person['first_name'] . " " . $person['last_name'] ?></h1>
