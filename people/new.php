@@ -1,6 +1,6 @@
 <?php
 $page['title'] = 'Pet Registry';
-require_once $_SERVER['DOCUMENT_ROOT'] . '/partials/header.php';
+echo get_partial('header.php');
 /** @var PDO $pdo_connection */
 $people = $pdo_connection->query("SELECT * FROM people ORDER BY last_name")->fetchAll();
 ?>
@@ -31,4 +31,4 @@ $people = $pdo_connection->query("SELECT * FROM people ORDER BY last_name")->fet
     </form>
 </div>
 
-<?php require_once $_SERVER['DOCUMENT_ROOT'] . '/partials/footer.php' ?>
+<?= get_partial('footer.php') ?>

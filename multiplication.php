@@ -1,5 +1,6 @@
+<?php require_once $_SERVER['DOCUMENT_ROOT'] . '/bootstrap.php' ?>
 <?php
-require_once 'partials/header.php';
+echo get_partial('header.php');
 $grid_size = isset($_GET['grid_size']) ? $_GET['grid_size'] : 10;
 ?>
     <div class="jumbotron">
@@ -36,4 +37,4 @@ $grid_size = isset($_GET['grid_size']) ? $_GET['grid_size'] : 10;
         <!-- End The Table -->
 
     </div>
-<?php require_once 'partials/footer.php' ?>
+<?= get_partial('footer.php') ?>

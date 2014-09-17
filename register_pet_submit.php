@@ -1,5 +1,5 @@
+<?php require_once $_SERVER['DOCUMENT_ROOT'] . '/bootstrap.php' ?>
 <?php
-require_once $_SERVER['DOCUMENT_ROOT'] . '/bootstrap.php';
 /**
  * @var PDO $pdo_connection
  */

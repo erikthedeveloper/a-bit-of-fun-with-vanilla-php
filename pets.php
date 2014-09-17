@@ -1,6 +1,7 @@
+<?php require_once $_SERVER['DOCUMENT_ROOT'] . '/bootstrap.php' ?>
 <?php
 $page['title'] = 'Pets';
-require_once 'partials/header.php';
+echo get_partial('header.php');
 /** @var PDO $pdo_connection */
 $pets   = $pdo_connection->query("SELECT * FROM pets ORDER BY name")->fetchAll();
 ?>
@@ -19,5 +20,5 @@ $pets   = $pdo_connection->query("SELECT * FROM pets ORDER BY name")->fetchAll()
 </div>
 
 
-<?php require_once 'partials/footer.php' ?>
+<?= get_partial('footer.php') ?>
  

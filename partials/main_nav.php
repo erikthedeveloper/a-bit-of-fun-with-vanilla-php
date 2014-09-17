@@ -7,12 +7,12 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
         </button>
-        <a class="navbar-brand" href="/"><?= $display_user_name ?></a>
+        <a class="navbar-brand" href="/">Vanilla PHP Wonderland</a>
     </div>
 
     <!-- Collect the nav links, forms, and other content for toggling -->
     <div class="collapse navbar-collapse navbar-ex1-collapse">
-        <ul class="nav navbar-nav">
+        <ul class="nav navbar-nav navbar-right">
             <li class="<?= $_SERVER['REQUEST_URI'] == '/' ? 'active' : '' ?>">
                 <a href="/">Home</a>
             </li>

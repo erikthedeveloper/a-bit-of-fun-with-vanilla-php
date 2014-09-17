@@ -1,6 +1,5 @@
-<?php
-require_once 'partials/header.php';
-?>
+<?php require_once $_SERVER['DOCUMENT_ROOT'] . '/bootstrap.php' ?>
+<?= get_partial('header.php') ?>
     <div class="jumbotron">
         <h1>A Great Contact Form</h1>
 
@@ -21,4 +20,4 @@ require_once 'partials/header.php';
         </form>
 
     </div>
-<?php require_once 'partials/footer.php' ?>
+<?= get_partial('footer.php') ?>

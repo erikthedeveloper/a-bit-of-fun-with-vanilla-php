@@ -1,5 +1,5 @@
+<?php require_once $_SERVER['DOCUMENT_ROOT'] . '/bootstrap.php' ?>
 <?php
-session_start();
 
 $send_it = false;
 //$send_it = true;

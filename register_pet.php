@@ -1,6 +1,7 @@
+<?php require_once $_SERVER['DOCUMENT_ROOT'] . '/bootstrap.php' ?>
 <?php
 $page['title'] = 'Pet Registry';
-require_once 'partials/header.php';
+echo get_partial('header.php');
 /** @var PDO $pdo_connection */
 $sql = "SELECT people.id AS owner_id, pets.id AS pet_id, first_name, last_name, age, pets.name AS pet_name FROM people_pets
 LEFT JOIN people
@@ -84,4 +85,4 @@ $pets   = $pdo_connection->query("SELECT * FROM pets ORDER BY name")->fetchAll()
             </tr>
         <?php endforeach ?>
     </table>
-<?php require_once 'partials/footer.php' ?>
+<?= get_partial('footer.php') ?>
