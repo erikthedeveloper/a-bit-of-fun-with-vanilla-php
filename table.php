@@ -1,4 +1,4 @@
-<?php require_once 'includes/header.php' ?>
+<?php require_once 'partials/header.php' ?>
 <?php
 $num_rows = 5;
 $num_cols = 4;
@@ -19,4 +19,4 @@ $num_cols = 4;
         </table>
         <!-- End The Table -->
     </div>
-<?php require_once 'includes/footer.php' ?>
+<?php require_once 'partials/footer.php' ?>

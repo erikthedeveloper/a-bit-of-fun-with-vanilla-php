@@ -1,6 +1,6 @@
 <?php
 $page['title'] = 'Pet Registry';
-require_once 'includes/header.php';
+require_once 'partials/header.php';
 /** @var PDO $pdo_connection */
 $sql = "SELECT people.id AS owner_id, pets.id AS pet_id, first_name, last_name, age, pets.name AS pet_name FROM people_pets
 LEFT JOIN people
@@ -84,4 +84,4 @@ $pets   = $pdo_connection->query("SELECT * FROM pets ORDER BY name")->fetchAll()
             </tr>
         <?php endforeach ?>
     </table>
-<?php require_once 'includes/footer.php' ?>
+<?php require_once 'partials/footer.php' ?>

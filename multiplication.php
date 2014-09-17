@@ -1,5 +1,5 @@
 <?php
-require_once 'includes/header.php';
+require_once 'partials/header.php';
 $grid_size = isset($_GET['grid_size']) ? $_GET['grid_size'] : 10;
 ?>
     <div class="jumbotron">
@@ -36,4 +36,4 @@ $grid_size = isset($_GET['grid_size']) ? $_GET['grid_size'] : 10;
         <!-- End The Table -->
 
     </div>
-<?php require_once 'includes/footer.php' ?>
+<?php require_once 'partials/footer.php' ?>

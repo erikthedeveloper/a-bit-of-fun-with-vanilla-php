@@ -1,5 +1,5 @@
 <?php
-require_once 'includes/header.php';
+require_once 'partials/header.php';
 ?>
     <div class="jumbotron">
         <h1>A Great Contact Form</h1>
@@ -21,4 +21,4 @@ require_once 'includes/header.php';
         </form>
 
     </div>
-<?php require_once 'includes/footer.php' ?>
+<?php require_once 'partials/footer.php' ?>

@@ -1,6 +1,6 @@
 <?php
 $page['title'] = 'Pets';
-require_once 'includes/header.php';
+require_once 'partials/header.php';
 /** @var PDO $pdo_connection */
 $pets   = $pdo_connection->query("SELECT * FROM pets ORDER BY name")->fetchAll();
 ?>
@@ -19,5 +19,5 @@ $pets   = $pdo_connection->query("SELECT * FROM pets ORDER BY name")->fetchAll()
 </div>
 
 
-<?php require_once 'includes/footer.php' ?>
+<?php require_once 'partials/footer.php' ?>
  

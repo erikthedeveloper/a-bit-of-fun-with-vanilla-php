@@ -11,5 +11,5 @@ include_once $_SERVER['DOCUMENT_ROOT'] . '/bootstrap.php';
     <!--<link rel="stylesheet" media="screen" href="http://bootswatch.com/yeti/bootstrap.css">-->
 </head>
 <body>
-<?php include_once $_SERVER['DOCUMENT_ROOT'] . '/includes/main_nav.php' ?>
+<?php include_once $_SERVER['DOCUMENT_ROOT'] . '/partials/main_nav.php' ?>
 <div class="container">
