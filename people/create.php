@@ -10,9 +10,7 @@ $validate_fields = [
 
 foreach ($validate_fields as $key => $pattern) {
     if (!preg_match($pattern, $_POST[$key])) {
-        $_SESSION['flash']['message'] = "Whoops. Looks like you forgot to fill in \"$key\"!";
-        header("Location: /people/index.php");
-        exit;
+        redirect_user("/people/new.php", "Whoops. Looks like you forgot to fill in \"$key\"!");
     }
 }
 
