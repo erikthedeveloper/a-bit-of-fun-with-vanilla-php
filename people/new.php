@@ -2,12 +2,10 @@
 <?php
 $page['title'] = 'Pet Registry';
 echo get_partial('header.php');
-/** @var PDO $pdo_connection */
-$people = $pdo_connection->query("SELECT * FROM people ORDER BY last_name")->fetchAll();
 ?>
 <div class="jumbotron">
     <h1>New Person...</h1>
-    <form action="register_pet_submit.php" method="POST" class="form-horizontal">
+    <form action="/people/create.php" method="POST" class="form-horizontal">
         <div class="form-group">
             <div class="col-sm-3">
                 <label>First Name</label>

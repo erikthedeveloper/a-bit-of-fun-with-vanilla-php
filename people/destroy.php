@@ -1,12 +1,15 @@
 <?php
 require_once $_SERVER['DOCUMENT_ROOT'] . '/bootstrap.php';
-/**
- * @var PDO $pdo_connection
- */
 
+if (!isset($_GET['id'])) {
+    //redirect_user('/people/index.php', 'No person found for ID ... or you didn\'t supply one!');
+}
+$person_id = $_GET['id'];
 
-// Redirect user
-$_SESSION['flash']['message'] = "Submitted. Whatever.";
-header("Location: /people/index.php");
+/** @var PDO $pdo_connection */
+$statement = $pdo_connection->prepare('DELETE FROM people WHERE id = :id');
+$statement->execute(['id' => $person_id]);
+
+//redirect_user('/people/index.php', "You. Killed. Him. ...");
 
 ?>

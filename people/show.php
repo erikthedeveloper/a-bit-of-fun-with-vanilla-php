@@ -1,34 +1,26 @@
 <?php require_once $_SERVER['DOCUMENT_ROOT'] . '/bootstrap.php' ?>
+<?= get_partial('header.php') ?>
 <?php
-$page['title'] = 'Pet Registry';
-echo get_partial('header.php');
+if (!isset($_GET['id'])) {
+    redirect_user('/people/index.php', 'No person found for ID ... or you didn\'t supply one!');
+}
+$person_id = $_GET['id'];
+
 /** @var PDO $pdo_connection */
-$people = $pdo_connection->query("SELECT * FROM people ORDER BY last_name")->fetchAll();
+$statement = $pdo_connection->prepare('SELECT * FROM people WHERE id = :id');
+$statement->execute(['id' => $person_id]);
+$person = $statement->fetch();
 ?>
 <div class="jumbotron">
-    <h1>View Just One</h1>
-    <form action="register_pet_submit.php" method="POST" class="form-horizontal">
-        <div class="form-group">
-            <div class="col-sm-3">
-                <label>First Name</label>
-                <input type="text" name="first_name" placeholder="Your First Name" class="form-control input-lg">
-            </div>
-            <div class="col-sm-3">
-                <label>Last Name</label>
-                <input type="text" name="last_name" placeholder="Your Last Name" class="form-control input-lg">
-            </div>
-            <div class="col-sm-2">
-                <label>Age</label>
-                <input type="number" name="age" placeholder="Your Age" min="18" max="99" value="21"
-                       class="form-control input-lg">
-            </div>
-        </div>
+    <h1><?= $person['first_name'] . " " . $person['last_name'] ?></h1>
+    <p>
+        At age <?= $person['age'] ?>, <?= $person['first_name'] ?> is a Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab, accusamus ad assumenda atque aut consectetur dignissimos ducimus eaque error id, ipsum iure maiores maxime placeat quia, reiciendis repellat repudiandae totam?
+    </p>
 
-        <div class="form-group">
-            <div class="col-sm-4">
-                <button class="btn btn-lg btn-block btn-primary">Submit</button>
-            </div>
-        </div>
+    <form action="/people/destroy.php" onsubmit="confirm('Are you sure?!?!!! .... ??')">
+        <a class="btn btn-sm btn-info" href="/people/edit.php?id=<?= $person['id'] ?>">Edit <?= $person['first_name'] ?></a>
+        <input type="hidden" name="id" value="<?= $person['id'] ?>" />
+        <button class="btn btn-sm btn-danger">Destroy <?= $person['first_name'] ?></button>
     </form>
 </div>
 

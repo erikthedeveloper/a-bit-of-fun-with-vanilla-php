@@ -12,12 +12,14 @@ $people = $pdo_connection->query("SELECT * FROM people ORDER BY last_name")->fet
             <th>Last Name</th>
             <th>First Name</th>
             <th>Age</th>
+            <th>View</th>
         </tr>
         <?php foreach ($people as $person): ?>
             <tr>
                 <td><?= $person['last_name'] ?></td>
                 <td><?= $person['first_name'] ?></td>
                 <td><?= $person['age'] ?></td>
+                <td><a href="/people/show.php?id=<?= $person['id'] ?>">View</a></td>
             </tr>
         <?php endforeach ?>
     </table>

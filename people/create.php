@@ -8,8 +8,7 @@ require_once $_SERVER['DOCUMENT_ROOT'] . '/bootstrap.php';
 $validate_fields = [
     'first_name' => "/\w+/",
     'last_name'  => "/\w+/",
-    'age'        => "/\d+/",
-    'pet_name'   => "/\w+/"
+    'age'        => "/\d+/"
 ];
 
 foreach ($validate_fields as $key => $pattern) {
@@ -23,7 +22,6 @@ foreach ($validate_fields as $key => $pattern) {
 $first_name = $_POST['first_name'];
 $last_name  = $_POST['last_name'];
 $age        = $_POST['age'];
-$pet_name   = $_POST['pet_name'];
 
 // Insert User
 $success   = $pdo_connection->prepare('INSERT INTO people (first_name, last_name, age) VALUE (?, ?, ?)')
@@ -31,7 +29,6 @@ $success   = $pdo_connection->prepare('INSERT INTO people (first_name, last_name
 $people_id = $pdo_connection->lastInsertId();
 
 // Redirect user
-$_SESSION['flash']['message'] = "Submitted. Whatever.";
-header("Location: /people/index.php");
+redirect_user('/people/show.php?id=' . $people_id, "New user. Hooray.");
 
 ?>
