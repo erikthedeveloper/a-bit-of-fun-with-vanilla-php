@@ -2,7 +2,7 @@
 <?php
 $page['title'] = 'People';
 echo get_partial('header.php');
-$people = \MyClasses\Models\People::getAll();
+$people = \MyClasses\Models\Person::getAll();
 ?>
 <div class="jumbotron">
     <h1>All People</h1>

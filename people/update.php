@@ -5,7 +5,7 @@ if (!isset($_GET['id'])) {
 }
 $person_id = $_GET['id'];
 
-$person = \MyClasses\Models\People::getOne($person_id);
+$person = \MyClasses\Models\Person::getOne($person_id);
 
 // Get form data
 $validate_fields = [
@@ -25,7 +25,7 @@ $last_name  = $_POST['last_name'];
 $age        = $_POST['age'];
 
 // Update User
-$success = \MyClasses\Models\People::update($person_id, $first_name, $last_name, $age);
+$success = \MyClasses\Models\Person::update($person_id, $first_name, $last_name, $age);
 
 // Redirect user
 $success = $success ? "YES" : json_encode($pdo_connection->errorInfo());

@@ -6,7 +6,7 @@ if (!isset($_GET['id'])) {
 }
 $person_id = $_GET['id'];
 
-$person = \MyClasses\Models\People::getOne($person_id);
+$person = \MyClasses\Models\Person::getOne($person_id);
 ?>
 <div class="jumbotron">
     <h1><?= $person['first_name'] . " " . $person['last_name'] ?></h1>

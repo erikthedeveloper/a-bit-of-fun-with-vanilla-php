@@ -6,7 +6,7 @@ if (!isset($_GET['id'])) {
 }
 $person_id = $_GET['id'];
 
-$destroyed = \MyClasses\Models\People::destroy($person_id);
+$destroyed = \MyClasses\Models\Person::destroy($person_id);
 
 redirect_user('/people/index.php', "You. Killed. Him. ...");
 

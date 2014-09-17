@@ -3,11 +3,11 @@
 namespace MyClasses\Models;
 
 /**
- * Class People
+ * Class Person
  * @package MyClasses\Models
  * @author  Erik Aybar
  */
-class People extends BaseModel
+class Person extends BaseModel
 {
 
     /**
@@ -42,8 +42,8 @@ class People extends BaseModel
      */
     public static function create($first_name, $last_name, $age)
     {
-        $success   = static::getPdoConnection()->prepare('INSERT INTO people (first_name, last_name, age) VALUE (?, ?, ?)')
-            ->execute([$first_name, $last_name, $age]);
+        $success   = static::getPdoConnection()->prepare('INSERT INTO people (first_name, last_name, age) VALUE (:first_name, :last_name, :age)')
+            ->execute(['first_name' => $first_name, 'last_name' => $last_name, 'age' => $age]);
         $people_id = (int) static::getPdoConnection()->lastInsertId();
         return $people_id;
     }
@@ -72,4 +72,4 @@ class People extends BaseModel
         $destroyed = $statement->execute(['id' => $id]);
         return $destroyed;
     }
-} 
+}
