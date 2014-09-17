@@ -14,4 +14,11 @@ class Person extends BaseModel implements DbResourceInterface
 
     protected static $table = 'people';
 
+    protected static $select_cols = [
+        "id",
+        "first_name",
+        "last_name",
+        "age"
+    ];
+
 }

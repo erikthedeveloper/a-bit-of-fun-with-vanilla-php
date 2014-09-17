@@ -9,11 +9,24 @@ use MyClasses\Database\PdoConnectionTrait;
  * @package MyClasses\Models
  * @author  Erik Aybar
  */
-class BaseModel {
+class BaseModel
+{
 
+    /**
+     * Uses PDO for MySQL
+     */
+    use PdoConnectionTrait;
+
+    /**
+     * @var string
+     */
     protected static $table;
 
-    use PdoConnectionTrait;
+    /**
+     * @var array
+     */
+    protected static $select_cols = ["*"];
+
 
     /**
      * @return array
@@ -21,8 +34,19 @@ class BaseModel {
      */
     public static function getAll()
     {
-        $people = static::getPdoConnection()->query("SELECT * FROM " . static::$table . " ORDER BY last_name")->fetchAll();
-        return $people;
+        $table       = static::$table;
+        $select_cols = static::getSelectColsString();
+        $collection  = static::getPdoConnection()->query("SELECT {$select_cols} FROM {$table} ORDER BY last_name")->fetchAll();
+        return $collection;
+    }
+
+    /**
+     * @return string
+     * @author Erik Aybar
+     */
+    private static function getSelectColsString()
+    {
+        return implode(", ", static::$select_cols);
     }
 
     /**
@@ -32,10 +56,12 @@ class BaseModel {
      */
     public static function getOne($id)
     {
-        $statement = static::getPdoConnection()->prepare('SELECT * FROM " . static::$table . " WHERE id = :id');
+        $table       = static::$table;
+        $select_cols = static::getSelectColsString();
+        $statement   = static::getPdoConnection()->prepare("SELECT {$select_cols} FROM {$table} WHERE id = :id");
         $statement->execute(['id' => $id]);
-        $person = $statement->fetch();
-        return $person;
+        $individual = $statement->fetch();
+        return $individual;
     }
 
     /**
@@ -47,10 +73,11 @@ class BaseModel {
      */
     public static function create($first_name, $last_name, $age)
     {
-        $success   = static::getPdoConnection()->prepare('INSERT INTO " . static::$table . " (first_name, last_name, age) VALUE (:first_name, :last_name, :age)')
+        $table         = static::$table;
+        $success       = static::getPdoConnection()->prepare('INSERT INTO {$table} (first_name, last_name, age) VALUE (:first_name, :last_name, :age)')
             ->execute(['first_name' => $first_name, 'last_name' => $last_name, 'age' => $age]);
-        $people_id = (int)static::getPdoConnection()->lastInsertId();
-        return $people_id;
+        $individual_id = (int)static::getPdoConnection()->lastInsertId();
+        return $individual_id;
     }
 
     /**
@@ -63,7 +90,8 @@ class BaseModel {
      */
     public static function update($id, $first_name, $last_name, $age)
     {
-        $success = static::getPdoConnection()->prepare('UPDATE " . static::$table . " SET first_name = :first_name, last_name = :last_name, age = :age WHERE id = :id')
+        $table   = static::$table;
+        $success = static::getPdoConnection()->prepare('UPDATE {$table} SET first_name = :first_name, last_name = :last_name, age = :age WHERE id = :id')
             ->execute(['first_name' => $first_name, 'last_name' => $last_name, 'age' => $age, 'id' => $id]);
         return $success;
     }
@@ -75,7 +103,8 @@ class BaseModel {
      */
     public static function destroy($id)
     {
-        $statement = static::getPdoConnection()->prepare('DELETE FROM " . static::$table . " WHERE id = :id');
+        $table     = static::$table;
+        $statement = static::getPdoConnection()->prepare('DELETE FROM {$table} WHERE id = :id');
         $destroyed = $statement->execute(['id' => $id]);
         return $destroyed;
     }
