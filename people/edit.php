@@ -1,6 +1,6 @@
 <?php require_once $_SERVER['DOCUMENT_ROOT'] . '/bootstrap.php' ?>
 <?php
-$page['title'] = 'Pet Registry';
+$page['title'] = 'Edit Person';
 echo get_partial('header.php');
 if (!isset($_GET['id'])) {
     redirect_user('/people/index.php', 'No person found for ID ... or you didn\'t supply one!');

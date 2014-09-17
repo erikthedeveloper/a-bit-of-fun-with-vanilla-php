@@ -18,7 +18,7 @@ $first_name = $_POST['first_name'];
 $last_name  = $_POST['last_name'];
 $age        = $_POST['age'];
 
-$people_id = \MyClasses\Models\Person::create($first_name, $last_name, $age);
+$people_id = \MyClasses\Models\Person::create(compact('first_name', 'last_name', 'age'));
 
 // Redirect user
 redirect_user('/people/show.php?id=' . $people_id, "New user. Hooray.");

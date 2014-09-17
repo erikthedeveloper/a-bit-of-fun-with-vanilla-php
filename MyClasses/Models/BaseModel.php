@@ -2,6 +2,7 @@
 
 namespace MyClasses\Models;
 
+use MyClasses\Database\DbResourceInterface;
 use MyClasses\Database\PdoConnectionTrait;
 
 /**
@@ -9,7 +10,7 @@ use MyClasses\Database\PdoConnectionTrait;
  * @package MyClasses\Models
  * @author  Erik Aybar
  */
-class BaseModel
+class BaseModel implements DbResourceInterface
 {
 
     /**
@@ -41,15 +42,6 @@ class BaseModel
     }
 
     /**
-     * @return string
-     * @author Erik Aybar
-     */
-    private static function getSelectColsString()
-    {
-        return implode(", ", static::$select_cols);
-    }
-
-    /**
      * @param $id
      * @return array
      * @author Erik Aybar
@@ -65,34 +57,33 @@ class BaseModel
     }
 
     /**
-     * @param $first_name
-     * @param $last_name
-     * @param $age
+     * @param array $create_data
      * @return int
-     * @author Erik Aybar
+     * @author   Erik Aybar
      */
-    public static function create($first_name, $last_name, $age)
+    public static function create(array $create_data)
     {
         $table         = static::$table;
-        $success       = static::getPdoConnection()->prepare('INSERT INTO {$table} (first_name, last_name, age) VALUE (:first_name, :last_name, :age)')
-            ->execute(['first_name' => $first_name, 'last_name' => $last_name, 'age' => $age]);
+        $insert_cols   = static::makeInsertColsString($create_data);
+        $insert_vals   = static::makeInsertValsString($create_data);
+        $success       = static::getPdoConnection()->prepare("INSERT INTO {$table} {$insert_cols} VALUE {$insert_vals}")
+            ->execute($create_data);
         $individual_id = (int)static::getPdoConnection()->lastInsertId();
         return $individual_id;
     }
 
     /**
-     * @param $id
-     * @param $first_name
-     * @param $last_name
-     * @param $age
+     * @param       $id
+     * @param array $update_data
      * @return bool
-     * @author Erik Aybar
+     * @author   Erik Aybar
      */
-    public static function update($id, $first_name, $last_name, $age)
+    public static function update($id, array $update_data)
     {
-        $table   = static::$table;
-        $success = static::getPdoConnection()->prepare('UPDATE {$table} SET first_name = :first_name, last_name = :last_name, age = :age WHERE id = :id')
-            ->execute(['first_name' => $first_name, 'last_name' => $last_name, 'age' => $age, 'id' => $id]);
+        $table         = static::$table;
+        $update_fields = static::makeUpdateFieldsString($update_data);
+        $success       = static::getPdoConnection()->prepare("UPDATE {$table} SET {$update_fields} WHERE id = :id")
+            ->execute(array_merge($update_data, ['id' => $id]));
         return $success;
     }
 
@@ -104,8 +95,57 @@ class BaseModel
     public static function destroy($id)
     {
         $table     = static::$table;
-        $statement = static::getPdoConnection()->prepare('DELETE FROM {$table} WHERE id = :id');
+        $statement = static::getPdoConnection()->prepare("DELETE FROM {$table} WHERE id = :id");
         $destroyed = $statement->execute(['id' => $id]);
         return $destroyed;
+    }
+
+    /**
+     * @return string
+     * @author Erik Aybar
+     */
+    private static function getSelectColsString()
+    {
+        return implode(", ", static::$select_cols);
+    }
+
+    /**
+     * @param array $create_data
+     * @return string
+     * @author Erik Aybar
+     */
+    private static function makeInsertColsString(array $create_data)
+    {
+        $create_data_keys = array_keys($create_data);
+        return "(" . implode(", ", $create_data_keys) . ")";
+    }
+
+    /**
+     * @param array $create_data
+     * @return string
+     * @author Erik Aybar
+     */
+    private static function makeInsertValsString(array $create_data)
+    {
+        $create_data_keys = array_keys($create_data);
+        for ($i = 0; $i < count($create_data_keys); $i++) {
+            $create_data_keys[$i] = ":" . $create_data_keys[$i];
+        }
+        return "(" . implode(", ", $create_data_keys) . ")";
+    }
+
+    /**
+     * @param array $update_data
+     * @return string
+     * @author Erik Aybar
+     */
+    private static function makeUpdateFieldsString(array $update_data)
+    {
+        $str = "";
+        foreach (array_keys($update_data) as $key) {
+            $str .= "{$key} = :{$key}, ";
+        }
+        $str = rtrim($str, ", ");
+        return $str;
     }
 }

@@ -9,7 +9,7 @@ use MyClasses\Database\DbResourceInterface;
  * @package MyClasses\Models
  * @author  Erik Aybar
  */
-class Person extends BaseModel implements DbResourceInterface
+class Person extends BaseModel
 {
 
     protected static $table = 'people';
