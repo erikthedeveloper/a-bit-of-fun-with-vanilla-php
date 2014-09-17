@@ -1,7 +1,7 @@
 <?php require_once $_SERVER['DOCUMENT_ROOT'] . '/bootstrap.php' ?>
 <?php
 $page['title'] = 'People';
-echo get_partial('header.php');
+echo get_partial('header.php', ['page' => $page]);
 $people = \MyClasses\Models\Person::getAll();
 ?>
 
