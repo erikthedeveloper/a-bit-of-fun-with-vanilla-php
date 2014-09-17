@@ -19,17 +19,30 @@
                 '/people/new.php'     => 'P - New',
                 '/people/show.php'    => 'P - Show',
                 '/people/edit.php'    => 'P - Edit',
-                '/register_pet.php'   => 'Pet Form',
-                '/pets.php'           => 'Pets',
-                '/table.php'          => 'A Table',
-                '/multiplication.php' => 'Multiplication',
-                '/contact.php'        => 'Contact Form',
             ];
             foreach ($links as $href => $link_text): ?>
                 <li class="<?= strpos($_SERVER['REQUEST_URI'], preg_replace('/\.php/', '', trim($href, "/"))) ? 'active' : '' ?>">
                     <a href="<?= $href ?>"><?= $link_text ?></a>
                 </li>
             <?php endforeach ?>
+            <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown <span class="caret"></span></a>
+                <ul class="dropdown-menu" role="menu">
+                    <?php
+                    $links = [
+                        '/register_pet.php'   => 'Pet Form',
+                        '/pets.php'           => 'Pets',
+                        '/table.php'          => 'A Table',
+                        '/multiplication.php' => 'Multiplication',
+                        '/contact.php'        => 'Contact Form',
+                    ];
+                    foreach ($links as $href => $link_text): ?>
+                        <li class="<?= strpos($_SERVER['REQUEST_URI'], preg_replace('/\.php/', '', trim($href, "/"))) ? 'active' : '' ?>">
+                            <a href="<?= $href ?>"><?= $link_text ?></a>
+                        </li>
+                    <?php endforeach ?>
+                </ul>
+            </li>
             <?php if (isset($_SESSION['user_name'])): ?>
                 <li>
                     <a href="/clear.php">Sign out</a>
