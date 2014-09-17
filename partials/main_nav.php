@@ -13,20 +13,20 @@
     <!-- Collect the nav links, forms, and other content for toggling -->
     <div class="collapse navbar-collapse navbar-ex1-collapse">
         <ul class="nav navbar-nav navbar-right">
-            <li class="<?= $_SERVER['REQUEST_URI'] == '/' ? 'active' : '' ?>">
-                <a href="/">Home</a>
-            </li>
             <?php
             $links = [
-                'register_pet.php'   => 'Pet Form',
-                'people.php'         => 'People',
-                'pets.php'           => 'Pets',
-                'table.php'          => 'A Table',
-                'multiplication.php' => 'Multiplication',
-                'contact.php'        => 'Contact Form',
+                '/people/index.php'   => 'P - Index',
+                '/people/new.php'     => 'P - New',
+                '/people/show.php'    => 'P - Show',
+                '/people/edit.php'    => 'P - Edit',
+                '/register_pet.php'   => 'Pet Form',
+                '/pets.php'           => 'Pets',
+                '/table.php'          => 'A Table',
+                '/multiplication.php' => 'Multiplication',
+                '/contact.php'        => 'Contact Form',
             ];
             foreach ($links as $href => $link_text): ?>
-                <li class="<?= strpos($_SERVER['REQUEST_URI'], preg_replace('/\.php/', '', $href)) ? 'active' : '' ?>">
+                <li class="<?= strpos($_SERVER['REQUEST_URI'], preg_replace('/\.php/', '', trim($href, "/"))) ? 'active' : '' ?>">
                     <a href="<?= $href ?>"><?= $link_text ?></a>
                 </li>
             <?php endforeach ?>
