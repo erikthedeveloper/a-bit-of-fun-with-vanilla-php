@@ -14,9 +14,7 @@ $validate_fields = [
 
 foreach ($validate_fields as $key => $pattern) {
     if (!preg_match($pattern, $_POST[$key])) {
-        $_SESSION['flash']['message'] = "Whoops. Looks like you forgot to fill in \"$key\"!";
-        header("Location: /register_pet.php");
-        exit;
+        redirect_user("/people/edit.php", "Whoops. Looks like you forgot to fill in \"$key\"!");
     }
 }
 
@@ -31,7 +29,6 @@ $success   = $pdo_connection->prepare('INSERT INTO people (first_name, last_name
 $people_id = $pdo_connection->lastInsertId();
 
 // Redirect user
-$_SESSION['flash']['message'] = "Submitted. Whatever.";
-header("Location: /people/index.php");
+redirect_user("/people/index.php", "Updated... whatever");
 
 ?>

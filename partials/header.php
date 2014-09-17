@@ -1,5 +1,5 @@
 <?php
-include_once $_SERVER['DOCUMENT_ROOT'] . '/bootstrap.php';
+require_once $_SERVER['DOCUMENT_ROOT'] . '/bootstrap.php';
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -11,5 +11,6 @@ include_once $_SERVER['DOCUMENT_ROOT'] . '/bootstrap.php';
     <!--<link rel="stylesheet" media="screen" href="http://bootswatch.com/yeti/bootstrap.css">-->
 </head>
 <body>
-<?php include_once $_SERVER['DOCUMENT_ROOT'] . '/partials/main_nav.php' ?>
+<?php require_once $_SERVER['DOCUMENT_ROOT'] . '/partials/main_nav.php' ?>
+<?php require_once $_SERVER['DOCUMENT_ROOT'] . '/partials/flash_message.php' ?>
 <div class="container">

@@ -6,8 +6,7 @@ $people = $pdo_connection->query("SELECT * FROM people ORDER BY last_name")->fet
 ?>
 <div class="jumbotron">
     <h1>Edit One</h1>
-    <?php include $_SERVER['DOCUMENT_ROOT'] . "/partials/flash_message.php" ?>
-    <form action="register_pet_submit.php" method="POST" class="form-horizontal">
+    <form action="/people/update.php" method="POST" class="form-horizontal">
         <div class="form-group">
             <div class="col-sm-3">
                 <label>First Name</label>
