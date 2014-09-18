@@ -2,8 +2,7 @@
 <?php
 $page['title'] = 'Pets';
 echo get_partial('header.php');
-/** @var PDO $pdo_connection */
-$pets   = $pdo_connection->query("SELECT * FROM pets ORDER BY name")->fetchAll();
+$pets = \MyClasses\Models\Pet::getAll();
 ?>
 <div class="jumbotron">
     <h2>Pets</h2>

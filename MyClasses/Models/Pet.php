@@ -3,20 +3,18 @@
 namespace MyClasses\Models;
 
 /**
- * Class Person
+ * Class Pet
  * @package MyClasses\Models
  * @author  Erik Aybar
  */
-class Person extends BaseModel
+class Pet extends BaseModel
 {
 
-    protected static $table = 'people';
+    protected static $table = 'pets';
 
     protected static $select_cols = [
         "id",
-        "first_name",
-        "last_name",
-        "age"
+        "name"
     ];
 
 }

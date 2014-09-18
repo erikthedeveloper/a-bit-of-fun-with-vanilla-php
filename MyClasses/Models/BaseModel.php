@@ -37,7 +37,7 @@ class BaseModel implements DbResourceInterface
     {
         $table       = static::$table;
         $select_cols = static::getSelectColsString();
-        $collection  = static::getPdoConnection()->query("SELECT {$select_cols} FROM {$table} ORDER BY last_name")->fetchAll();
+        $collection  = static::getPdoConnection()->query("SELECT {$select_cols} FROM {$table}")->fetchAll();
         return $collection;
     }
 
