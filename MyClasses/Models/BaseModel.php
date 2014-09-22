@@ -58,9 +58,10 @@ class BaseModel implements DbResourceInterface
         }
         $sql .= " WHERE ";
         foreach ($wheres as $where) {
-            $where_sql = "$where[0] {$where[1]} {$where[2]}";
+            $where_sql = "$where[0] {$where[1]} {$where[2]} AND ";
             $sql .= $where_sql;
         }
+        $sql = rtrim($sql, " AND ");
         return $sql;
     }
 

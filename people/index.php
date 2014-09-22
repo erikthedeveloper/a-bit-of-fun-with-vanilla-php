@@ -8,7 +8,7 @@ if (!empty($_GET['older_than'])) $wheres[]    = ['age', '>=', $_GET['older_than'
 if (!empty($_GET['order_by']))   $order_bys[] = $_GET['order_by'];
 $people = \MyClasses\Models\Person::getAll($wheres, $order_bys);
 
-$existing_query_params = $_GET;;
+$existing_query_params = $_GET;
 ?>
 
 <div class="row">
