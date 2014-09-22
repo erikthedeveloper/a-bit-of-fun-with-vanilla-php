@@ -33,12 +33,55 @@ class BaseModel implements DbResourceInterface
      * @return array
      * @author Erik Aybar
      */
-    public static function getAll()
+    public static function getAll(array $wheres = [], array $order_bys = [])
     {
         $table       = static::$table;
         $select_cols = static::getSelectColsString();
-        $collection  = static::getPdoConnection()->query("SELECT {$select_cols} FROM {$table}")->fetchAll();
+        $sql = "SELECT {$select_cols} FROM {$table}";
+        $sql .= static::makeWhereClauseString($wheres);
+        $sql .= static::makeOrderByString($order_bys);
+        //var_dump($sql); exit;
+        $collection  = static::getPdoConnection()->query($sql)->fetchAll();
         return $collection;
+    }
+
+    /**
+     * @param array $where
+     * @return string
+     * @author Erik Aybar
+     */
+    public static function makeWhereClauseString(array $wheres)
+    {
+        $sql = "";
+        if (!count($wheres)) {
+            return $sql;
+        }
+        $sql .= " WHERE ";
+        foreach ($wheres as $where) {
+            $where_sql = "$where[0] {$where[1]} {$where[2]}";
+            $sql .= $where_sql;
+        }
+        return $sql;
+    }
+
+    /**
+     * @param array $order_bys
+     * @return string
+     * @author Erik Aybar
+     */
+    public static function makeOrderByString(array $order_bys)
+    {
+        $sql = "";
+        if (!count($order_bys)) {
+            return $sql;
+        }
+        $sql .= " ORDER BY ";
+        foreach ($order_bys as $order_by) {
+            $order_by = $order_by . " ,";
+            $sql .= $order_by;
+        }
+        $sql = rtrim($sql, " ,");
+        return $sql;
     }
 
     /**

@@ -13,7 +13,7 @@ interface DbResourceInterface
      * @return array
      * @author Erik Aybar
      */
-    public static function getAll();
+    public static function getAll(array $wheres = [], array $order_bys = []);
 
     /**
      * @param $id
