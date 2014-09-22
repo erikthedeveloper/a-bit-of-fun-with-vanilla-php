@@ -70,7 +70,7 @@ $existing_query_params = $_GET;;
                         <a class="btn btn-sm btn-info btn-block" href="/people/edit.php?id=<?= $person['id'] ?>">Edit <?= $person['first_name'] ?></a>
                     </div>
                     <div class="col-sm-4">
-                        <form action="/people/destroy.php" onsubmit="return confirm('Are you sure?!?!!! .... ??');">
+                        <form action="/people/destroy.php" method="POST" onsubmit="return confirm('Are you sure?!?!!! .... ??');">
                             <input type="hidden" name="id" value="<?= $person['id'] ?>"/>
                             <button class="btn btn-sm btn-danger btn-block">Destroy <?= $person['first_name'] ?></button>
                         </form>

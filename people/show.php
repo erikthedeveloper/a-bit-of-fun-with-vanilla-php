@@ -22,7 +22,7 @@ $page['title'] = 'Show Person';
     </div>
 </div>
 
-<form action="/people/destroy.php" onsubmit="return confirm('Are you sure?!?!!! .... ??');">
+<form action="/people/destroy.php" method="POST" onsubmit="return confirm('Are you sure?!?!!! .... ??');">
     <a class="btn btn-sm btn-info" href="/people/edit.php?id=<?= $person['id'] ?>">Edit <?= $person['first_name'] ?></a>
     <input type="hidden" name="id" value="<?= $person['id'] ?>"/>
     <button class="btn btn-sm btn-danger">Destroy <?= $person['first_name'] ?></button>
