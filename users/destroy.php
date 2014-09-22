@@ -2,13 +2,13 @@
 require_once $_SERVER['DOCUMENT_ROOT'] . '/bootstrap.php';
 
 if ($_SERVER['REQUEST_METHOD'] != "POST") {
-    redirect_user('/people/index.php', "Bad method. Bad user!");
+    redirect_user('/users/index.php', "Bad method. Bad user!");
 }
 
-$person_id = $_POST['id'];
-$person = \MyClasses\Models\Person::getOne($person_id);
-$destroyed = \MyClasses\Models\Person::destroy($person_id);
+$user_id = $_POST['id'];
+$user = \MyClasses\Models\User::getOne($user_id);
+$destroyed = \MyClasses\Models\User::destroy($user_id);
 
-redirect_user('/people/index.php', "You killed {$person['first_name']}!");
+redirect_user('/users/index.php', "You killed {$user['first_name']}!");
 
 ?>

@@ -1,11 +1,11 @@
 <?php require_once $_SERVER['DOCUMENT_ROOT'] . '/bootstrap.php' ?>
 <?php
-$page['title'] = 'New Person';
+$page['title'] = 'New User';
 echo get_partial('header.php', ['page' => $page]);
 ?>
 
-<h1>New Person...</h1>
-<form action="/people/create.php" method="POST" class="form-horizontal">
+<h1>New User...</h1>
+<form action="/users/create.php" method="POST" class="form-horizontal">
     <div class="form-group">
         <div class="col-sm-3">
             <label>First Name</label>
