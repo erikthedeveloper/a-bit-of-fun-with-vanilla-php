@@ -5,7 +5,9 @@ require_once $_SERVER['DOCUMENT_ROOT'] . '/bootstrap.php';
 $validate_fields = [
     'first_name' => "/\w+/",
     'last_name'  => "/\w+/",
-    'age'        => "/\d+/"
+    'email'    => "/\w+/",
+    'password' => "/\w+/",
+    'password_confirmation' => "/\w+/"
 ];
 
 foreach ($validate_fields as $key => $pattern) {
@@ -14,11 +16,20 @@ foreach ($validate_fields as $key => $pattern) {
     }
 }
 
+if ($_POST['password_confirmation'] != $_POST['password']) {
+    redirect_user("/users/new.php", "Whoops. Your password confirmation didn't match...");
+}
+
 $first_name = $_POST['first_name'];
 $last_name  = $_POST['last_name'];
-$age        = $_POST['age'];
+$email      = $_POST['email'];
+$password   = $_POST['password'];
 
-$users_id = \MyClasses\Models\User::create(compact('first_name', 'last_name', 'age'));
+$encrypted_password = password_hash($password, PASSWORD_BCRYPT);
+
+$user_create_data = compact('first_name', 'last_name', 'email', 'encrypted_password');
+var_dump($user_create_data); exit;
+$users_id = \MyClasses\Models\User::create($user_create_data);
 
 // Redirect user
 redirect_user('/users/show.php?id=' . $users_id, "New user. Hooray.");
