@@ -37,52 +37,11 @@ class BaseModel implements DbResourceInterface
     {
         $table       = static::$table;
         $select_cols = static::getSelectColsString();
-        $sql = "SELECT {$select_cols} FROM {$table}";
+        $sql         = "SELECT {$select_cols} FROM {$table}";
         $sql .= static::makeWhereClauseString($wheres);
         $sql .= static::makeOrderByString($order_bys);
-        //var_dump($sql); exit;
-        $collection  = static::getPdoConnection()->query($sql)->fetchAll();
+        $collection = static::getPdoConnection()->query($sql)->fetchAll();
         return $collection;
-    }
-
-    /**
-     * @param array $where
-     * @return string
-     * @author Erik Aybar
-     */
-    public static function makeWhereClauseString(array $wheres)
-    {
-        $sql = "";
-        if (!count($wheres)) {
-            return $sql;
-        }
-        $sql .= " WHERE ";
-        foreach ($wheres as $where) {
-            $where_sql = "$where[0] {$where[1]} {$where[2]} AND ";
-            $sql .= $where_sql;
-        }
-        $sql = rtrim($sql, " AND ");
-        return $sql;
-    }
-
-    /**
-     * @param array $order_bys
-     * @return string
-     * @author Erik Aybar
-     */
-    public static function makeOrderByString(array $order_bys)
-    {
-        $sql = "";
-        if (!count($order_bys)) {
-            return $sql;
-        }
-        $sql .= " ORDER BY ";
-        foreach ($order_bys as $order_by) {
-            $order_by = $order_by . " ,";
-            $sql .= $order_by;
-        }
-        $sql = rtrim($sql, " ,");
-        return $sql;
     }
 
     /**
@@ -148,9 +107,49 @@ class BaseModel implements DbResourceInterface
      * @return string
      * @author Erik Aybar
      */
-    private static function getSelectColsString()
+    protected static function getSelectColsString()
     {
         return implode(", ", static::$select_cols);
+    }
+
+    /**
+     * @param array $where
+     * @return string
+     * @author Erik Aybar
+     */
+    protected static function makeWhereClauseString(array $wheres)
+    {
+        $sql = "";
+        if (!count($wheres)) {
+            return $sql;
+        }
+        $sql .= " WHERE ";
+        foreach ($wheres as $where) {
+            $where_sql = "$where[0] {$where[1]} {$where[2]} AND ";
+            $sql .= $where_sql;
+        }
+        $sql = rtrim($sql, " AND ");
+        return $sql;
+    }
+
+    /**
+     * @param array $order_bys
+     * @return string
+     * @author Erik Aybar
+     */
+    protected static function makeOrderByString(array $order_bys)
+    {
+        $sql = "";
+        if (!count($order_bys)) {
+            return $sql;
+        }
+        $sql .= " ORDER BY ";
+        foreach ($order_bys as $order_by) {
+            $order_by = $order_by . " ,";
+            $sql .= $order_by;
+        }
+        $sql = rtrim($sql, " ,");
+        return $sql;
     }
 
     /**
@@ -158,7 +157,7 @@ class BaseModel implements DbResourceInterface
      * @return string
      * @author Erik Aybar
      */
-    private static function makeInsertColsString(array $create_data)
+    protected static function makeInsertColsString(array $create_data)
     {
         $create_data_keys = array_keys($create_data);
         return "(" . implode(", ", $create_data_keys) . ")";
@@ -169,7 +168,7 @@ class BaseModel implements DbResourceInterface
      * @return string
      * @author Erik Aybar
      */
-    private static function makeInsertValsString(array $create_data)
+    protected static function makeInsertValsString(array $create_data)
     {
         $create_data_keys = array_keys($create_data);
         for ($i = 0; $i < count($create_data_keys); $i++) {
@@ -183,7 +182,7 @@ class BaseModel implements DbResourceInterface
      * @return string
      * @author Erik Aybar
      */
-    private static function makeUpdateFieldsString(array $update_data)
+    protected static function makeUpdateFieldsString(array $update_data)
     {
         $str = "";
         foreach (array_keys($update_data) as $key) {
