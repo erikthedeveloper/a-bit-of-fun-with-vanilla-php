@@ -2,7 +2,7 @@
 
 namespace MyClasses\Models;
 
-use MyClasses\Database\DbResourceInterface;
+use MyClasses\Database\ResourceInterface;
 use MyClasses\Database\PdoConnectionTrait;
 
 /**
@@ -10,7 +10,7 @@ use MyClasses\Database\PdoConnectionTrait;
  * @package MyClasses\Models
  * @author  Erik Aybar
  */
-class BaseModel implements DbResourceInterface
+class BaseModel implements ResourceInterface
 {
 
     /**

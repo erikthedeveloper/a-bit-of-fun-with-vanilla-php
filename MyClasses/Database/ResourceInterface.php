@@ -2,11 +2,11 @@
 namespace MyClasses\Database;
 
 /**
- * Interface DbResourceInterface
+ * Interface ResourceInterface
  * @package MyClasses\Database
  * @author  Erik Aybar
  */
-interface DbResourceInterface
+interface ResourceInterface
 {
 
     /**
