@@ -1,6 +1,12 @@
 </div> <!-- .container -->
 <footer class="footer container text-center">
     The Footer
+    <?php if (isset($_SESSION['user']['first_name'])): ?>
+        <a href="/clear.php">
+            | Logout
+            <small>(<?= $_SESSION['user']['first_name'] ?>)</small>
+        </a>
+    <?php endif ?>
 </footer>
 <!-- Scripts -->
 <script src="//code.jquery.com/jquery.js"></script>

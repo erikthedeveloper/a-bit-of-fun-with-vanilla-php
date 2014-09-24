@@ -62,7 +62,7 @@ abstract class BaseModel extends DB implements ResourceInterface
     {
         $table       = static::$table;
         $select_cols = static::getSelectColsString();
-        $statement   = static::getConnection()->prepare("SELECT {$select_cols} FROM {$table} WHERE {$field} {$condition} :value");
+        $statement   = static::getConnection()->prepare("SELECT {$select_cols} FROM {$table} WHERE {$field} {$condition} :value LIMIT 1");
         $statement->execute(['value' => $value]);
         $individual = $statement->fetch();
         return $individual;

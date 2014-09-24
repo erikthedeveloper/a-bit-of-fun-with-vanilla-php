@@ -22,7 +22,8 @@ $password_is_correct = password_verify($password, $hashed);
 //var_dump(compact('password_is_correct', 'user', 'password')); exit;
 
 if ($password_is_correct) {
-    redirect_user('/users/login.php', "Password correct. Congratulation...");
+    $_SESSION['user']['first_name'] = $user['first_name'];
+    redirect_user('/users/login.php', "Password correct. Congratulations...");
 } else {
     redirect_user('/users/login.php', "Wrong password! Try again...");
 }
