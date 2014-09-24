@@ -2,21 +2,16 @@
 
 namespace MyClasses\Models;
 
+use MyClasses\Database\DB;
 use MyClasses\Database\ResourceInterface;
-use MyClasses\Database\PdoConnectionTrait;
 
 /**
  * Class BaseModel
  * @package MyClasses\Models
  * @author  Erik Aybar
  */
-class BaseModel implements ResourceInterface
+abstract class BaseModel extends DB implements ResourceInterface
 {
-
-    /**
-     * Uses PDO for MySQL
-     */
-    use PdoConnectionTrait;
 
     /**
      * @var string
@@ -27,7 +22,6 @@ class BaseModel implements ResourceInterface
      * @var array
      */
     protected static $select_cols = ["*"];
-
 
     /**
      * @return array
@@ -40,7 +34,7 @@ class BaseModel implements ResourceInterface
         $sql         = "SELECT {$select_cols} FROM {$table}";
         $sql .= static::makeWhereClauseString($wheres);
         $sql .= static::makeOrderByString($order_bys);
-        $collection = static::getPdoConnection()->query($sql)->fetchAll();
+        $collection = static::getConnection()->query($sql)->fetchAll();
         return $collection;
     }
 
@@ -53,7 +47,7 @@ class BaseModel implements ResourceInterface
     {
         $table       = static::$table;
         $select_cols = static::getSelectColsString();
-        $statement   = static::getPdoConnection()->prepare("SELECT {$select_cols} FROM {$table} WHERE id = :id");
+        $statement   = static::getConnection()->prepare("SELECT {$select_cols} FROM {$table} WHERE id = :id");
         $statement->execute(['id' => $id]);
         $individual = $statement->fetch();
         return $individual;
@@ -69,9 +63,9 @@ class BaseModel implements ResourceInterface
         $table         = static::$table;
         $insert_cols   = static::makeInsertColsString($create_data);
         $insert_vals   = static::makeInsertValsString($create_data);
-        $success       = static::getPdoConnection()->prepare("INSERT INTO {$table} {$insert_cols} VALUE {$insert_vals}")
+        $success       = static::getConnection()->prepare("INSERT INTO {$table} {$insert_cols} VALUE {$insert_vals}")
             ->execute($create_data);
-        $individual_id = (int)static::getPdoConnection()->lastInsertId();
+        $individual_id = (int)static::getConnection()->lastInsertId();
         return $individual_id;
     }
 
@@ -85,7 +79,7 @@ class BaseModel implements ResourceInterface
     {
         $table         = static::$table;
         $update_fields = static::makeUpdateFieldsString($update_data);
-        $success       = static::getPdoConnection()->prepare("UPDATE {$table} SET {$update_fields} WHERE id = :id")
+        $success       = static::getConnection()->prepare("UPDATE {$table} SET {$update_fields} WHERE id = :id")
             ->execute(array_merge($update_data, ['id' => $id]));
         return $success;
     }
@@ -98,7 +92,7 @@ class BaseModel implements ResourceInterface
     public static function destroy($id)
     {
         $table     = static::$table;
-        $statement = static::getPdoConnection()->prepare("DELETE FROM {$table} WHERE id = :id");
+        $statement = static::getConnection()->prepare("DELETE FROM {$table} WHERE id = :id");
         $destroyed = $statement->execute(['id' => $id]);
         return $destroyed;
     }
@@ -191,4 +185,5 @@ class BaseModel implements ResourceInterface
         $str = rtrim($str, ", ");
         return $str;
     }
+
 }

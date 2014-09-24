@@ -6,6 +6,4 @@ $database = [
     'database' => "cs4000_fun"
 ];
 
-$dsn               = "mysql:host=" . $database['host'] . ";dbname=" . $database['database'];
-$pdo_connection    = new PDO($dsn, "homestead", "secret");
-//$mysqli_connection = new mysqli($database['host'], $database['user'], $database['password'], $database['database'], 3306);
+\MyClasses\Database\DB::connect($database['host'], $database['user'], $database['password'], $database['database']);

@@ -10,16 +10,30 @@ trait PdoConnectionTrait
     /**
      * @var PDO
      */
-    static private $pdo_connection;
+    static protected $pdo_connection;
 
+    /**
+     * @param     $host
+     * @param     $user
+     * @param     $password
+     * @param     $database
+     * @param int $port
+     * @author Erik Aybar
+     */
+    public static function connect($host, $user, $password, $database, $port = 3306)
+    {
+        $dsn               = "mysql:host={$host};dbname={$database}";
+        $pdo_connection    = new PDO($dsn, $user, $password);
+        static::setConnection($pdo_connection);
+    }
 
     /**
      * @return PDO
      * @author Erik Aybar
      */
-    public static function getPdoConnection()
+    public static function getConnection()
     {
-        return self::$pdo_connection;
+        return static::$pdo_connection;
     }
 
 
@@ -27,8 +41,9 @@ trait PdoConnectionTrait
      * @param PDO $pdo_connection
      * @author Erik Aybar
      */
-    public static function setPdoConnection(PDO $pdo_connection)
+    public static function setConnection($pdo_connection)
     {
-        self::$pdo_connection = $pdo_connection;
+        static::$pdo_connection = $pdo_connection;
     }
+
 }
