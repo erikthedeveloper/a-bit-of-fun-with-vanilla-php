@@ -4,7 +4,6 @@ $page['title'] = 'Users';
 echo get_partial('header.php', ['page' => $page]);
 $wheres = [];
 $order_bys = [];
-if (!empty($_GET['older_than'])) $wheres[]    = ['age', '>=', $_GET['older_than']];
 if (!empty($_GET['order_by']))   $order_bys[] = $_GET['order_by'];
 $users = \MyClasses\Models\User::getAll($wheres, $order_bys);
 
@@ -18,12 +17,6 @@ $existing_query_params = $_GET;
     <div class="col-sm-8">
         <form action="">
             <div class="row" style="padding-top: 40px;">
-                <div class="col-sm-3 text-right">
-                    <label>Minimum Age: </label>
-                </div>
-                <div class="col-sm-3">
-                    <input type="number" min="18" name="older_than" value="<?= !empty($_GET['older_than']) ? $_GET['older_than'] : '' ?>" class="form-control input-sm"/>
-                </div>
                 <div class="col-sm-2">
                     <?php if (!empty($_GET['order_by'])): ?>
                         <input type="hidden" name="order_by" value="<?= $_GET['order_by'] ?>"/>
@@ -60,7 +53,6 @@ $existing_query_params = $_GET;
         <tr>
             <td><?= $user['last_name'] ?></td>
             <td><?= $user['first_name'] ?></td>
-            <td><?= $user['age'] ?></td>
             <td style="max-width: 200px;">
                 <div class="row">
                     <div class="col-sm-4">

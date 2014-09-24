@@ -28,7 +28,7 @@ $password   = $_POST['password'];
 $encrypted_password = password_hash($password, PASSWORD_BCRYPT);
 
 $user_create_data = compact('first_name', 'last_name', 'email', 'encrypted_password');
-var_dump($user_create_data); exit;
+
 $users_id = \MyClasses\Models\User::create($user_create_data);
 
 // Redirect user

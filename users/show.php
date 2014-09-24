@@ -14,7 +14,7 @@ $page['title'] = 'Show User';
 <div class="row">
     <div class="col-sm-8">
         <p>
-            At age <?= $user['age'] ?>, <?= $user['first_name'] ?> is a Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab, accusamus ad assumenda atque aut consectetur dignissimos ducimus eaque error id, ipsum iure maiores maxime placeat quia, reiciendis repellat repudiandae totam?
+            <?= $user['first_name'] ?> is a Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab, accusamus ad assumenda atque aut consectetur dignissimos ducimus eaque error id, ipsum iure maiores maxime placeat quia, reiciendis repellat repudiandae totam?
         </p>
     </div>
     <div class="col-sm-4">
