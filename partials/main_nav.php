@@ -13,6 +13,19 @@
     <!-- Collect the nav links, forms, and other content for toggling -->
     <div class="collapse navbar-collapse navbar-ex1-collapse">
         <ul class="nav navbar-nav navbar-right">
+            
+            <?php
+            $links = [
+                '/users/new.php'   => 'Sign Up',
+                '/users/login.php'     => 'Log In',
+                '/users/index.php'    => 'Users'
+            ];
+            foreach ($links as $href => $link_text): ?>
+            <li class="<?= strpos($_SERVER['REQUEST_URI'], preg_replace('/\.php/', '', trim($href, "/"))) ? 'active' : '' ?>">
+                <a href="<?= $href ?>"><?= $link_text ?></a>
+            </li>
+            <?php endforeach ?>
+            
             <?php
             $links = [
                 '/people/index.php'   => 'P - Index',
