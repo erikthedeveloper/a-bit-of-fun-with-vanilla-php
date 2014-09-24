@@ -54,6 +54,21 @@ abstract class BaseModel extends DB implements ResourceInterface
     }
 
     /**
+     * @param $id
+     * @return array
+     * @author Erik Aybar
+     */
+    public static function getOneBy($field, $value, $condition = '=')
+    {
+        $table       = static::$table;
+        $select_cols = static::getSelectColsString();
+        $statement   = static::getConnection()->prepare("SELECT {$select_cols} FROM {$table} WHERE {$field} {$condition} :value");
+        $statement->execute(['value' => $value]);
+        $individual = $statement->fetch();
+        return $individual;
+    }
+
+    /**
      * @param array $create_data
      * @return int
      * @author   Erik Aybar
