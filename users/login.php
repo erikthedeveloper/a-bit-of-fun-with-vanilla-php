@@ -1,12 +1,13 @@
 <?php require_once $_SERVER['DOCUMENT_ROOT'] . '/bootstrap.php' ?>
 <?php
+\MyClasses\Auth\AuthMaster::redirectIfLoggedIn('/');
 $page['title'] = 'New User';
 echo get_partial('header.php', ['page' => $page]);
 ?>
 
 <div class="jumbotron">
     <h1>Log In</h1>
-    <form action="/users/submit_login.php" method="POST" class="form-horizontal">
+    <form action="/sessions/create.php" method="POST" class="form-horizontal">
         <div class="form-group">
             <div class="col-sm-5">
                 <label class="sr-only">Email</label>

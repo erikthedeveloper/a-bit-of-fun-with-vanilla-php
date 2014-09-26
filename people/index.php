@@ -1,5 +1,8 @@
 <?php require_once $_SERVER['DOCUMENT_ROOT'] . '/bootstrap.php' ?>
 <?php
+
+\MyClasses\Auth\AuthMaster::redirectIfNotLoggedIn();
+
 $page['title'] = 'People';
 echo get_partial('header.php', ['page' => $page]);
 $wheres = [];

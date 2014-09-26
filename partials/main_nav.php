@@ -16,9 +16,10 @@
             
             <?php
             $links = [
-                '/users/new.php'   => 'Sign Up',
-                '/users/login.php'     => 'Log In',
-                '/users/index.php'    => 'Users'
+                '/users/new.php'    => 'Sign Up',
+                '/users/login.php'  => 'Log In',
+                '/users/index.php'  => 'Users',
+                '/people/index.php' => 'Top Secret'
             ];
             foreach ($links as $href => $link_text): ?>
             <li class="<?= strpos($_SERVER['REQUEST_URI'], preg_replace('/\.php/', '', trim($href, "/"))) ? 'active' : '' ?>">
