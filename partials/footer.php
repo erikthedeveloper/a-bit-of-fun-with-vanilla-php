@@ -2,7 +2,7 @@
 <footer class="footer container text-center">
     The Footer
     <?php if (isset($_SESSION['user']['first_name'])): ?>
-        <a href="/clear.php">
+        <a href="/logout.php">
             | Logout
             <small>(<?= $_SESSION['user']['first_name'] ?>)</small>
         </a>

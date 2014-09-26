@@ -30,8 +30,9 @@ $encrypted_password = password_hash($password, PASSWORD_BCRYPT);
 $user_create_data = compact('first_name', 'last_name', 'email', 'encrypted_password');
 
 $users_id = \MyClasses\Models\User::create($user_create_data);
-
+$user     = \MyClasses\Models\User::getOne($users_id);
+\MyClasses\Auth\AuthMaster::logUserInUsingUserArray($user);
 // Redirect user
-redirect_user('/users/show.php?id=' . $users_id, "New user. Hooray.");
+redirect_user('/users/show.php?id=' . $users_id, "Welcome, {$user['first_name']}!");
 
 ?>

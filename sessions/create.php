@@ -19,11 +19,10 @@ $password = $_POST['password'];
 $user                = \MyClasses\Models\User::getOneBy('email', $email);
 $hashed              = $user['encrypted_password'];
 $password_is_correct = password_verify($password, $hashed);
-//var_dump(compact('password_is_correct', 'user', 'password')); exit;
 
 if ($password_is_correct) {
     \MyClasses\Auth\AuthMaster::logUserInUsingUserArray($user);
-    redirect_user('/users/login.php', "Password correct. Congratulations...");
+    redirect_user('/users/index.php', "Log in success. Congratulations, {$user['first_name']}!");
 } else {
     redirect_user('/users/login.php', "Wrong password! Try again...");
 }
