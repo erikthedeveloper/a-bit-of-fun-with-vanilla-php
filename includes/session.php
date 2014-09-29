@@ -1,3 +1,3 @@
 <?php
 session_start();
-$display_user_name = isset($_SESSION['user_name']) ? $_SESSION['user_name'] : 'Anonymous';
+$current_user = \MyClasses\Auth\AuthMaster::getCurrentUser();

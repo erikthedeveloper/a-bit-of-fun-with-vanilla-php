@@ -2,6 +2,9 @@
 
 namespace MyClasses\Auth;
 
+use Exception;
+use MyClasses\Models\User;
+
 /**
  * Class AuthMaster
  * @package MyClasses\Auth
@@ -11,27 +14,36 @@ class AuthMaster
 {
 
     /**
+     * @return array|bool
+     * @throws Exception
+     * @author Erik Aybar
+     */
+    public static function getCurrentUser()
+    {
+        if (!static::checkIfLoggedIn()) return false;
+        $user_id = $_SESSION['user_id'];
+        $user = User::getOne($user_id);
+        if (!$user) throw new Exception("User not found using session user_id {$user_id}. Bad!");
+        return $user;
+    }
+
+    /**
      * @return bool
      * @author Erik Aybar
      */
     public static function checkIfLoggedIn()
     {
-        $is_logged_in = isset($_SESSION['user']);
+        $is_logged_in = isset($_SESSION['user_id']);
         return $is_logged_in;
     }
 
     /**
-     * @param array $user
+     * @param int $user
      * @author Erik Aybar
      */
-    public static function logUserInUsingUserArray(array $user)
+    public static function logUserInUsingId($user_id)
     {
-        $safe_data = [];
-        $approved_fields = ['first_name', 'last_name'];
-        foreach ($approved_fields as $key) {
-            $safe_data[$key] = $user[$key];
-        }
-        $_SESSION['user'] = $safe_data;
+        $_SESSION['user_id'] = $user_id;
     }
 
     /**
@@ -39,7 +51,7 @@ class AuthMaster
      */
     public static function logOut()
     {
-        unset($_SESSION['user']);
+        unset($_SESSION['user_id']);
     }
 
     /**

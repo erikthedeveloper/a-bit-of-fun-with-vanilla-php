@@ -21,7 +21,7 @@ $hashed              = $user['encrypted_password'];
 $password_is_correct = password_verify($password, $hashed);
 
 if ($password_is_correct) {
-    \MyClasses\Auth\AuthMaster::logUserInUsingUserArray($user);
+    \MyClasses\Auth\AuthMaster::logUserInUsingId($user['id']);
     redirect_user('/users/index.php', "Log in success. Congratulations, {$user['first_name']}!");
 } else {
     redirect_user('/users/login.php', "Wrong password! Try again...");

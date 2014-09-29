@@ -1,7 +1,7 @@
 <?php
 require_once $_SERVER['DOCUMENT_ROOT'] . '/bootstrap.php';
 
-unset($_SESSION['user']);
+\MyClasses\Auth\AuthMaster::logOut();
 
-header("Location: /");
+redirect_user('/', 'You have been logged out');
 ?>
