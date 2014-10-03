@@ -1,20 +1,12 @@
 <?php
 require_once $_SERVER['DOCUMENT_ROOT'] . '/bootstrap.php';
 
-// Get form data
-$validate_fields = [
+$rules = [
     'email'    => "/\w+/",
     'password' => "/\w+/"
 ];
-
-foreach ($validate_fields as $key => $pattern) {
-    if (!preg_match($pattern, $_POST[$key])) {
-        redirect_user("/users/login.php", "Whoops. Looks like you forgot to fill in \"$key\"!");
-    }
-}
-
-$email    = $_POST['email'];
-$password = $_POST['password'];
+$validator = new \MyClasses\Validation\Validator();
+$validator->validate($rules, $_POST);
 
 $user                = \MyClasses\Models\User::getOneBy('email', $email);
 $hashed              = $user['encrypted_password'];
