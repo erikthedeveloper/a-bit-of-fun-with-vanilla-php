@@ -8,9 +8,10 @@ $rules = [
     'password'              => "/\w+/",
     'password_confirmation' => "/\w+/"
 ];
+
 $validator = new \MyClasses\Validation\Validator();
 $validator->validate($rules, $_POST);
-$validator->redirectIfFailed('/users/new.php');
+$validator->redirectWithErrorsIfFailed('/users/new.php');
 if ($_POST['password'] != $_POST['password_confirmation'])
     redirect_user("/users/new.php", "Whoops. Your password confirmation didn't match...");
 

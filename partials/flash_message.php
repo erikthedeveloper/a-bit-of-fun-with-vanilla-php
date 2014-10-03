@@ -5,7 +5,8 @@ if ($flash_message): ?>
                                             border-radius: 0;
                                             bottom: 50px;
                                             position: absolute;
-                                            opacity: 0.8;">
+                                            opacity: 0.8;
+                                            z-index: 100">
         <h4>Hey, user!</h4>
         <?= $flash_message ?>
     </div>

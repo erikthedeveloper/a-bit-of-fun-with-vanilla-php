@@ -9,17 +9,20 @@ echo get_partial('header.php', ['page' => $page]);
     <div class="form-group">
         <div class="col-sm-6">
             <label>First Name</label>
-            <input type="text" name="first_name" placeholder="Your First Name" class="form-control input-lg">
+            <input type="text" name="first_name" placeholder="Your First Name" class="form-control input-lg" value="<?= flash_input_value('first_name') ?>">
+            <?= error_field_alert('first_name') ?>
         </div>
         <div class="col-sm-6">
             <label>Last Name</label>
-            <input type="text" name="last_name" placeholder="Your Last Name" class="form-control input-lg">
+            <input type="text" name="last_name" placeholder="Your Last Name" class="form-control input-lg" value="<?= flash_input_value('last_name') ?>">
+            <?= error_field_alert('last_name') ?>
         </div>
     </div>
     <div class="form-group">
         <div class="col-sm-12">
             <label>Email</label>
-            <input type="email" name="email" placeholder="Your Email" class="form-control input-lg">
+            <input type="email" name="email" placeholder="Your Email" class="form-control input-lg" value="<?= flash_input_value('email') ?>">
+            <?= error_field_alert('email') ?>
         </div>
     </div>
     <div class="form-group">
