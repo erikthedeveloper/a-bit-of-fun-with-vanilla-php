@@ -20,7 +20,7 @@ class Validator {
     public function validate($rules, $data) {
         foreach ($rules as $key => $pattern) {
             if (!preg_match($pattern, $data[$key])) {
-                $this->failed_fields[$key] = "{$key} failed!";
+                $this->failed_fields[$key] = ucfirst(str_replace('_', ' ', $key)) . " failed!";
             }
         }
 
