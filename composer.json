@@ -1,0 +1,17 @@
+{
+    "name": "root/my_public_html",
+    "require-dev": {
+        "phpspec/phpspec": "~2.0"
+    },
+    "autoload": {
+      "psr-4": {
+          "MyClasses\\": "MyClasses/"
+      }
+    },
+    "authors": [
+        {
+            "name": "Erik Aybar",
+            "email": "eaybar@practicegenius.com"
+        }
+    ]
+}

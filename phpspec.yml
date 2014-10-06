@@ -1,0 +1,4 @@
+suites:
+  my_classes:
+    namespace: 'MyClasses'
+    src_path: 'MyClasses'

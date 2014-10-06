@@ -2,12 +2,15 @@
 
 namespace MyClasses\Validation;
 
+use \InvalidArgumentException;
+
 /**
  * Class Validator
  * @package MyClasses\Validation
  * @author  Erik Aybar
  */
-class Validator {
+class Validator
+{
 
     protected $failed_fields = [];
 
@@ -17,10 +20,18 @@ class Validator {
      * @return bool
      * @author Erik Aybar
      */
-    public function validate($rules, $data) {
-        foreach ($rules as $key => $pattern) {
-            if (!preg_match($pattern, $data[$key])) {
-                $this->failed_fields[$key] = ucfirst(str_replace('_', ' ', $key)) . " failed!";
+    public function validate($rules, $data)
+    {
+        foreach ($rules as $field_name => $callable_rules) {
+            foreach ($callable_rules as $callable_rule) {
+                if (method_exists($this, $callable_rule)) {
+                    $passes = $this->$callable_rule($data[$field_name]);
+                    if (!$passes) {
+                        $this->failed_fields[$field_name] = ucfirst(str_replace('_', ' ', $field_name)) . " failed!";
+                    }
+                } else {
+                    throw new InvalidArgumentException("{$callable_rule} method does not exist to validate the {$field_name} field");
+                }
             }
         }
 
@@ -32,24 +43,10 @@ class Validator {
      * @param $destination
      * @author Erik Aybar
      */
-    public function redirectIfFailed($destination){
+    public function redirectIfFailed($destination)
+    {
         if (count($this->failed_fields)) {
             redirect_with_message($destination, $this->getValidationSummaryMessage());
-        }
-    }
-
-    /**
-     * @param $destination
-     * @author Erik Aybar
-     */
-    public function redirectWithErrorsIfFailed($destination){
-        if (count($this->failed_fields)) {
-            $flash = [
-                'message' => $this->getValidationSummaryMessage(),
-                'errors' => $this->failed_fields,
-                'input' => $_POST // TODO: bad!!!!
-            ];
-            redirect_with_flash_array($destination, $flash);
         }
     }
 
@@ -60,5 +57,31 @@ class Validator {
     public function getValidationSummaryMessage()
     {
         return "Whoops. Looks like " . implode(', ', $this->failed_fields) . " were not valid!";
+    }
+
+    /**
+     * @param $destination
+     * @author Erik Aybar
+     */
+    public function redirectWithErrorsIfFailed($destination)
+    {
+        if (count($this->failed_fields)) {
+            $flash = [
+                'message' => $this->getValidationSummaryMessage(),
+                'errors'  => $this->failed_fields,
+                'input'   => $_POST // TODO: bad!!!!
+            ];
+            redirect_with_flash_array($destination, $flash);
+        }
+    }
+
+    protected function not_empty($data)
+    {
+        return !empty($data);
+    }
+
+    protected function email($data)
+    {
+        return preg_match('/\w+@\w+\.\w+/', $data);
     }
 }
