@@ -12,7 +12,14 @@ use \InvalidArgumentException;
 class Validator
 {
 
+    /**
+     * @var array
+     */
     protected $failed_fields = [];
+    /**
+     * @var string
+     */
+    protected $callable_prefix = 'validate_';
 
     /**
      * @param $rules
@@ -24,6 +31,7 @@ class Validator
     {
         foreach ($rules as $field_name => $callable_rules) {
             foreach ($callable_rules as $callable_rule) {
+                $callable_rule = $this->callable_prefix . $callable_rule;
                 if (method_exists($this, $callable_rule)) {
                     $passes = $this->$callable_rule($data[$field_name]);
                     if (!$passes) {
@@ -75,12 +83,22 @@ class Validator
         }
     }
 
-    protected function not_empty($data)
+    /**
+     * @param $data
+     * @return bool
+     * @author Erik Aybar
+     */
+    protected function validate_not_empty($data)
     {
         return !empty($data);
     }
 
-    protected function email($data)
+    /**
+     * @param $data
+     * @return int
+     * @author Erik Aybar
+     */
+    protected function validate_email($data)
     {
         return preg_match('/\w+@\w+\.\w+/', $data);
     }
