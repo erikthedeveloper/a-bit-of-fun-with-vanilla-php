@@ -27,7 +27,7 @@ class Validator
      * @return bool
      * @author Erik Aybar
      */
-    public function validate($rules, $data)
+    public function validate(array $rules, array $data)
     {
         foreach ($rules as $field_name => $callable_rules) {
             foreach ($callable_rules as $callable_rule) {
@@ -43,8 +43,33 @@ class Validator
             }
         }
 
-        $is_valid = count($this->failed_fields) == 0;
-        return $is_valid;
+        return $this;
+    }
+
+    /**
+     * @return bool
+     * @author Erik Aybar
+     */
+    public function hasErrors()
+    {
+        return count($this->failed_fields) > 0;
+    }
+
+    /**
+     * @return bool
+     * @author Erik Aybar
+     */
+    public function hasValidData()
+    {
+        return (!$this->hasErrors());
+    }
+
+    /**
+     * @author Erik Aybar
+     */
+    public function clearValidations()
+    {
+        $this->failed_fields = [];
     }
 
     /**
