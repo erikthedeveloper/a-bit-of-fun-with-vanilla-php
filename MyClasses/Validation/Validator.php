@@ -31,7 +31,7 @@ class Validator
     {
         foreach ($rules as $field_name => $callable_rules) {
             foreach ($callable_rules as $callable_rule) {
-                $this->callCallableRule($callable_rule, $field_name, $data[$field_name]);
+                $this->validateFieldUsingRule($callable_rule, $field_name, $data[$field_name]);
             }
         }
         return $this;
@@ -125,15 +125,11 @@ class Validator
      * @param $data
      * @author Erik Aybar
      */
-    protected function callCallableRule($callable_rule_name, $field_name, $data)
+    public function validateFieldUsingRule($callable_rule_name, $field_name, $data)
     {
         $callable_method = $this->getCallableRuleFromName($callable_rule_name);
-        if (method_exists($this, $callable_method)) {
-            if (!$this->$callable_method($data)) {
-                $this->failed_fields[$field_name] = "Failed the " . str_replace('_', ' ', $callable_method) . " validation";
-            }
-        } else {
-            throw new InvalidArgumentException("{$callable_rule_name} method does not exist to validate the {$field_name} field");
+        if (!$this->$callable_method($data)) {
+            $this->setFieldValidationFailed($field_name, $callable_method);
         }
     }
 
@@ -149,6 +145,21 @@ class Validator
                 explode('_', $callable_rule_name)
             )
         );
+
+        if (!method_exists($this, $callable_method)) {
+            throw new InvalidArgumentException("{$callable_rule_name} method does not exist to validate the {$field_name} field");
+        }
+
         return $callable_method;
+    }
+
+    /**
+     * @param $field_name
+     * @param $callable_method
+     * @author Erik Aybar
+     */
+    public function setFieldValidationFailed($field_name, $callable_method)
+    {
+        $this->failed_fields[$field_name] = "Failed the " . str_replace('_', ' ', $callable_method) . " validation";
     }
 }
