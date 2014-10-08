@@ -71,4 +71,10 @@ class ValidatorSpec extends ObjectBehavior
             ['email' => 'joe@joe.com']
         )->shouldHaveValidData();
     }
+
+    function it_builds_callable_method_from_validate_rule_name()
+    {
+        $this->getCallableRuleFromName('email')->shouldReturn('validateEmail');
+        $this->getCallableRuleFromName('not_empty')->shouldReturn('validateNotEmpty');
+    }
 }
