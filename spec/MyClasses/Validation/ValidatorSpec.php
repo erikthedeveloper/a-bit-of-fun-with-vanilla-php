@@ -68,6 +68,22 @@ class ValidatorSpec extends ObjectBehavior
         )->shouldHaveErrors();
     }
 
+    function it_can_also_accept_a_closure_in_place_of_validation_rule()
+    {
+        $custom_callable_validation = function ($value) {
+            return $value == 'johnny';
+        };
+        $this->validate(
+            ['a_field' => [$custom_callable_validation]],
+            ['a_field' => 'not_joe']
+        )->shouldHaveErrors();
+        $this->clearValidations();
+        $this->validate(
+            ['a_field' => [$custom_callable_validation]],
+            ['a_field' => 'johnny']
+        )->shouldNotHaveErrors();
+    }
+
     function it_allows_multiple_validation_rules_per_field()
     {
         $this->validate(

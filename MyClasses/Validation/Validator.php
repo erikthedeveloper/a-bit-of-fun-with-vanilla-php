@@ -127,8 +127,13 @@ class Validator
      */
     public function validateFieldUsingRule($callable_rule_name, $field_name, $data)
     {
-        $callable_method = $this->getCallableMethodFromRule($callable_rule_name);
-        $passes = $this->$callable_method($data);
+        if (is_callable($callable_rule_name)) {
+            $passes = $callable_rule_name($data);
+            $callable_rule_name = 'custom validation';
+        } else {
+            $callable_method = $this->getCallableMethodFromRule($callable_rule_name);
+            $passes          = $this->$callable_method($data);
+        }
         if (!$passes) {
             $this->setFieldValidationFailed($field_name, $callable_rule_name);
         }
