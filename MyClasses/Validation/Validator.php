@@ -116,7 +116,7 @@ class Validator
      */
     public function validateEmail($data)
     {
-        return preg_match('/\w+@\w+\.\w+/', $data);
+        return (bool) preg_match('/\w+@\w+\.\w+/', $data);
     }
 
     /**
@@ -140,17 +140,21 @@ class Validator
      */
     public function getCallableRuleFromName($callable_rule_name)
     {
-        $callable_method = $this->callable_prefix . join('',
+        $callable_method = $this->translateRuleNameToMethodName($callable_rule_name);
+        if (!method_exists($this, $callable_method)) {
+            throw new InvalidArgumentException("{$callable_rule_name} validation message does not exist");
+        }
+        return $callable_method;
+    }
+
+    public function translateRuleNameToMethodName($rule_name)
+    {
+        $method_name = $this->callable_prefix . join('',
             array_map('ucfirst',
-                explode('_', $callable_rule_name)
+                explode('_', $rule_name)
             )
         );
-
-        if (!method_exists($this, $callable_method)) {
-            throw new InvalidArgumentException("{$callable_rule_name} method does not exist to validate the {$field_name} field");
-        }
-
-        return $callable_method;
+        return $method_name;
     }
 
     /**
