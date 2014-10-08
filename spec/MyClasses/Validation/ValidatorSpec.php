@@ -36,7 +36,8 @@ class ValidatorSpec extends ObjectBehavior
     {
         $this->translateRuleNameToMethodName('email')->shouldReturn('validateEmail');
         $this->translateRuleNameToMethodName('not_empty')->shouldReturn('validateNotEmpty');
-        $this->shouldThrow('\InvalidArgumentException')->during('getCallableRuleFromName', ['not_a_valid_rule_name']);
+        //$this->translateRuleNameToMethodName('min:8')->shouldReturn('validateMin');
+        $this->shouldThrow('\InvalidArgumentException')->during('getCallableMethodFromRule', ['not_a_valid_rule_name']);
     }
 
     function it_validates_an_email_address()
@@ -54,9 +55,10 @@ class ValidatorSpec extends ObjectBehavior
 
     function it_validates_each_field_with_a_given_array_of_callables()
     {
+        // TODO: How to mock/stub method on "subject". (i.e. $this->validateUsingRule(rule, field_name, value)->shouldBeCalledTimes(3)
         $this->validate(
             [
-                'email'    => ['not_empty'],
+                'email'    => ['email'],
                 'password' => ['not_empty']
             ],
             [

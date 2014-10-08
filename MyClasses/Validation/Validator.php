@@ -127,9 +127,10 @@ class Validator
      */
     public function validateFieldUsingRule($callable_rule_name, $field_name, $data)
     {
-        $callable_method = $this->getCallableRuleFromName($callable_rule_name);
-        if (!$this->$callable_method($data)) {
-            $this->setFieldValidationFailed($field_name, $callable_method);
+        $callable_method = $this->getCallableMethodFromRule($callable_rule_name);
+        $passes = $this->$callable_method($data);
+        if (!$passes) {
+            $this->setFieldValidationFailed($field_name, $callable_rule_name);
         }
     }
 
@@ -138,7 +139,7 @@ class Validator
      * @return string
      * @author Erik Aybar
      */
-    public function getCallableRuleFromName($callable_rule_name)
+    public function getCallableMethodFromRule($callable_rule_name)
     {
         $callable_method = $this->translateRuleNameToMethodName($callable_rule_name);
         if (!method_exists($this, $callable_method)) {
