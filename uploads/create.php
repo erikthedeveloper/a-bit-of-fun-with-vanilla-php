@@ -2,7 +2,7 @@
 require_once $_SERVER['DOCUMENT_ROOT'] . '/bootstrap.php';
 
 $rules = [
-    'save_as' => "/\w+/"
+    'save_as' => ['not_empty']
 ];
 
 $validator = new \MyClasses\Validation\Validator();

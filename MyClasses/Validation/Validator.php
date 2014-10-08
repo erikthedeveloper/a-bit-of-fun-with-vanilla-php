@@ -80,7 +80,7 @@ class Validator
      */
     public function getValidationSummaryMessage()
     {
-        return "Whoops. Looks like " . implode(', ', $this->failed_fields) . " were not valid!";
+        return "Whoops. Looks like " . implode(', ', array_keys($this->failed_fields)) . " were not valid!";
     }
 
     /**
