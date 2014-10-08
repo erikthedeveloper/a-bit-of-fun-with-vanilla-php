@@ -14,8 +14,8 @@ echo get_partial('header.php', ['page' => $page]);
             File: <input type="file" name="file" id="file">
         </div>
         <div class="col-sm-5">
-            <label class="control-label" for="save_as">Save As:</label>
-            <input type="text" class="form-control input-md" name="save_as" id="save_as"/>
+            <label class="control-label" for="title">Title:</label>
+            <input type="text" class="form-control input-md" name="title" id="title"/>
         </div>
         <div class="col-sm-2">
             <button class="btn btn-lg btn-primary">Upload</button>
