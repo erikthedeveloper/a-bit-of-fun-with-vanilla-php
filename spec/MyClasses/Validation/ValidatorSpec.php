@@ -37,7 +37,7 @@ class ValidatorSpec extends ObjectBehavior
         $this->translateRuleNameToMethodName('email')->shouldReturn('validateEmail');
         $this->translateRuleNameToMethodName('not_empty')->shouldReturn('validateNotEmpty');
         //$this->translateRuleNameToMethodName('min:8')->shouldReturn('validateMin');
-        $this->shouldThrow('\InvalidArgumentException')->during('getCallableMethodFromRule', ['not_a_valid_rule_name']);
+        $this->shouldThrow('\InvalidArgumentException')->during('getCallableMethodFromRuleName', ['not_a_valid_rule_name']);
     }
 
     function it_validates_an_email_address()

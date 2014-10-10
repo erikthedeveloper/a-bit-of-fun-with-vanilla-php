@@ -30,29 +30,10 @@ class Validator
      */
     public function validate(array $rules, array $data)
     {
-        foreach ($rules as $i => $j) {
-            foreach ($j as $k) {
-
-                if (is_callable($k)) {
-                    $passes    = $k($data[$i]);
-                    $k = 'custom validation';
-                } else {
-                    $method_name = $this->callable_prefix . join(
-                            '',
-                            array_map(
-                                'ucfirst',
-                                explode('_', $k)
-                            )
-                        );
-                    if (!method_exists($this, $method_name)) {
-                        throw new InvalidArgumentException("{$k} validation message does not exist");
-                    }
-                    $passes = $this->$method_name($data[$i]);
-                }
-
-                if (!$passes) {
-                    $this->failed_fields[$i] = "Failed the " . str_replace('_', ' ', $k) . " validation";
-                }
+        foreach ($rules as $field_name => $rule_names) {
+            foreach ($rule_names as $rule_name) {
+                /* @throws InvalidArgumentException */
+                $this->validateFieldUsingRuleNameOrClosure($data, $rule_name, $field_name);
             }
         }
         return $this;
@@ -138,5 +119,71 @@ class Validator
     public function validateEmail($data)
     {
         return (bool)preg_match('/\w+@\w+\.\w+/', $data);
+    }
+
+    /**
+     * @param $rule_name
+     * @return string
+     * @author Erik Aybar
+     */
+    public function translateRuleNameToMethodName($rule_name)
+    {
+        $method_name = $this->callable_prefix . join(
+                '',
+                array_map(
+                    'ucfirst',
+                    explode('_', $rule_name)
+                )
+            );
+        return $method_name;
+    }
+
+
+    /**
+     * @param $rule_name
+     * @return string
+     * @throws InvalidArgumentException
+     * @author Erik Aybar
+     */
+    public function getCallableMethodFromRuleName($rule_name)
+    {
+        $method_name = $this->translateRuleNameToMethodName($rule_name);
+        if (!method_exists($this, $method_name)) {
+            throw new InvalidArgumentException("{$rule_name} validation message does not exist");
+        }
+        return $method_name;
+    }
+
+    /**
+     * @param $rule_name
+     * @param $field_name
+     * @author Erik Aybar
+     */
+    public function addFailedFieldValidation($rule_name, $field_name)
+    {
+        $this->failed_fields[$field_name] = "Failed the " . str_replace('_', ' ', $rule_name) . " validation";
+    }
+
+    /**
+     * @param array $data
+     * @param       $rule_name
+     * @param       $field_name
+     * @throws InvalidArgumentException
+     * @author Erik Aybar
+     */
+    public function validateFieldUsingRuleNameOrClosure(array $data, $rule_name, $field_name)
+    {
+        if (is_callable($rule_name)) {
+            $passes    = $rule_name($data[$field_name]);
+            $rule_name = 'custom validation';
+        } else {
+            /* @throws InvalidArgumentException */
+            $method_name = $this->getCallableMethodFromRuleName($rule_name);
+            $passes      = $this->$method_name($data[$field_name]);
+        }
+
+        if (!$passes) {
+            $this->addFailedFieldValidation($rule_name, $field_name);
+        }
     }
 }
