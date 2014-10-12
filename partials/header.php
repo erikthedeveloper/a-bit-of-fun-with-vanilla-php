@@ -5,7 +5,8 @@
     <title><?= isset($page['title']) ? $page['title'] : "A Page!" ?></title>
     <!-- Styles -->
     <link rel="stylesheet" media="screen" href="/assets/paper.min.css">
-    <!--<link rel="stylesheet" media="screen" href="http://bootswatch.com/yeti/bootstrap.css">-->
+    <link rel="stylesheet" type="text/css" href="/assets/slick/slick/slick.css"/>
+    <link rel="stylesheet" href="/assets/main.css"/>
 </head>
 <body>
 <?= get_partial('main_nav.php') ?>
