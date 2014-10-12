@@ -18,10 +18,10 @@ body > div.container {
 }
 
 .slick-gallery-item a {
-    display: block;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
+    /*display: block;*/
+    /*white-space: nowrap;*/
+    /*overflow: hidden;*/
+    /*text-overflow: ellipsis;*/
 }
 
 .slick-gallery-item img {

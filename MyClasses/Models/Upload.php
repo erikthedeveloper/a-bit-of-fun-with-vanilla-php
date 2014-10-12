@@ -24,6 +24,7 @@ class Upload extends BaseModel
      * @var array
      */
     protected static $select_cols = [
+        "id",
         "original_filename",
         "file_type",
         "file_size",

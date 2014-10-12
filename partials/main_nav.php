@@ -8,7 +8,7 @@ $links_logged_out = [
 ];
 $links_general    = [
     '/users/index.php' => 'Users',
-    '/uploads/new.php'   => 'Image Gallery'
+    '/uploads/index.php'   => 'Image Gallery'
 ];
 $links_dropdown   = [
     '/people/index.php'   => 'Top Secret',

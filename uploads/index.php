@@ -60,10 +60,14 @@ echo get_partial('header.php', ['page' => $page]);
             <div class="slick-gallery-item text-center">
                 <h5><?= $file['title'] ?></h5>
                 <a href="<?= $public_path ?>" target="_blank">
-                    <small><?= $file['original_filename'] ?></small>
-                    <hr/>
-                    <img class="img-responsive" src="<?= $public_path ?>" alt=""/>
+                    <?= $file['original_filename'] ?>
                 </a>
+                <form style="display:inline-block" action="/uploads/destroy.php" method="POST" onsubmit="return confirm('Are you sure?!?!!! .... ??');">
+                    <input type="hidden" name="id" value="<?= $file['id'] ?>"/>
+                    <button class="btn btn-sm btn-link"><small class="text-danger">delete</small></button>
+                </form>
+                <hr/>
+                <img class="img-responsive" src="<?= $public_path ?>" alt=""/>
             </div>
         <?php endforeach ?>
     </div>

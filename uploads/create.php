@@ -24,7 +24,7 @@ $data                    = [
     'file'  => $file
 ];
 $validator->validate($rules, $data);
-$validator->redirectWithErrorsIfFailed('/uploads/new.php');
+$validator->redirectWithErrorsIfFailed('/uploads/index.php');
 
 
 $upload_create_data = [
@@ -44,6 +44,6 @@ $real_path_dest = \MyClasses\Models\Upload::getRealPathFromStoredName($stored_fi
 move_uploaded_file($file['tmp_name'], $real_path_dest);
 //chmod($file_path, 0644);
 
-redirect_with_message('/uploads/new.php', 'File upload success!');
+redirect_with_message('/uploads/index.php', 'File upload success!');
 
 ?>
