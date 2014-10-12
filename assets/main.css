@@ -4,7 +4,8 @@ body {
 }
 
 body > div.container {
-    background: rgba(255, 255, 255, 0.7);
+    background: white;
+    /*background: rgba(255, 255, 255, 0.7);*/
 }
 
 .slick-prev:before, .slick-next:before {
@@ -21,6 +22,10 @@ body > div.container {
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+}
+
+.slick-gallery-item img {
+    margin: 0 auto;
 }
 
 .slick-center { }
