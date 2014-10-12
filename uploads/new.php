@@ -1,6 +1,6 @@
 <?php require_once $_SERVER['DOCUMENT_ROOT'] . '/bootstrap.php';
 
-$uploaded_files = array_slice(scandir(UPLOAD_DIR), 2);
+$uploaded_files = \MyClasses\Models\Upload::getAll([], ['id DESC']);
 
 $page['title'] = 'Upload a File';
 echo get_partial('header.php', ['page' => $page]);
@@ -25,14 +25,24 @@ echo get_partial('header.php', ['page' => $page]);
 
 <div class="clearfix"></div>
 
-<ul class="list-group">
-    <?php foreach ($uploaded_files as $file): ?>
-    <li class="list-group-item">
-        <a href="/uploads/files/<?= $file ?>">
-            <?= $file ?>
-        </a>
-    </li>
+<div class="list-group">
+    <?php foreach (array_chunk($uploaded_files, 3) as $uploaded_files_chunk): ?>
+        <div class="list-group-item">
+            <div class="row">
+                <?php foreach ($uploaded_files_chunk as $file):
+                    $public_path = \MyClasses\Models\Upload::getPublicPathFromStoredName($file['stored_filename']);
+                    ?>
+                    <div class="col-sm-4 text-center" style="overflow: hidden;">
+                        <h5><?= $file['title'] ?></h5>
+                        <a href="<?= $public_path ?>" target="_blank">
+                        <img class="img-responsive" src="<?= $public_path ?>" alt=""/>
+                            <small><?= $file['original_filename'] ?></small>
+                        </a>
+                    </div>
+                <?php endforeach ?>
+            </div>
+        </div>
     <?php endforeach ?>
-</ul>
+</div>
 <?= get_partial('footer.php') ?>
  
