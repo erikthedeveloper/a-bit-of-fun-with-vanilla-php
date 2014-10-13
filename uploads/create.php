@@ -5,7 +5,11 @@ $file  = $_FILES['file'];
 $title = $_POST['title'];
 
 $validator               = new \MyClasses\Validation\Validator();
-$file_validation_closure = function ($file) {
+$file_validation_message = 'File validation failed.';
+$file_validation_closure = function ($file) use (&$file_validation_message) {
+    if (!in_array($file['type'], ['image/png', 'image/jpg', 'image/jpeg'])) $file_validation_message .= ' Invalid file type.';
+    if ($file['size'] > 2000000) $file_validation_message .= " File too large.";
+
     if (
         !in_array($file['type'], ['image/png', 'image/jpg', 'image/jpeg'])
         ||
@@ -24,7 +28,10 @@ $data                    = [
     'file'  => $file
 ];
 $validator->validate($rules, $data);
-$validator->redirectWithErrorsIfFailed('/uploads/index.php');
+if ($validator->hasErrors()) {
+    redirect_with_message('/uploads/index.php', $file_validation_message);
+}
+//$validator->redirectWithErrorsIfFailed('/uploads/index.php');
 
 
 $upload_create_data = [
@@ -34,7 +41,6 @@ $upload_create_data = [
     "title"             => $title
 ];
 
-//var_dump($upload_create_data); exit;
 
 $upload_id = \MyClasses\Models\Upload::create($upload_create_data);
 $stored_filename = \MyClasses\Models\Upload::getHashedFiledNameFromFile($upload_id, $file);
@@ -44,6 +50,6 @@ $real_path_dest = \MyClasses\Models\Upload::getRealPathFromStoredName($stored_fi
 move_uploaded_file($file['tmp_name'], $real_path_dest);
 //chmod($file_path, 0644);
 
-redirect_with_message('/uploads/index.php', 'File upload success!');
+redirect_with_message('/uploads/index.php', "{$file['name']} was uploaded!");
 
 ?>

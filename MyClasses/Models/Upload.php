@@ -35,8 +35,10 @@ class Upload extends BaseModel
 
     public static function destroy($id)
     {
-        // Delete File from Filesystem
-        return parent::destroy($id);
+        $upload = static::getOne($id);
+        $real_path = static::getRealPathFromStoredName($upload['stored_filename']);;
+        $destroyed = (file_exists($real_path) && parent::destroy($id));
+        return $destroyed;
     }
 
 
@@ -51,17 +53,16 @@ class Upload extends BaseModel
     }
 
     /**
-     * @param       $id
+     * @param       $upload_id
      * @param array $file
      * @return string
      * @author Erik Aybar
      */
-    public static function getHashedFiledNameFromFile($id, array $file)
+    public static function getHashedFiledNameFromFile($upload_id, array $file)
     {
         $exploded = explode(".", $file['name']);
         $ext = end($exploded);
-        $hash_me = $file['name'] . $file['size'] . $file['type'];
-        $real_path = md5($hash_me) . "." . $ext;
+        $real_path = md5($upload_id) . "." . $ext;
         return $real_path;
     }
 
