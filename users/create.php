@@ -2,11 +2,11 @@
 require_once $_SERVER['DOCUMENT_ROOT'] . '/bootstrap.php';
 
 $rules = [
-    'first_name'            => "/\w+/",
-    'last_name'             => "/\w+/",
-    'email'                 => "/\w+/",
-    'password'              => "/\w+/",
-    'password_confirmation' => "/\w+/"
+    'first_name'            => ['not_empty'],
+    'last_name'             => ['not_empty'],
+    'email'                 => ['not_empty'],
+    'password'              => ['not_empty'],
+    'password_confirmation' => ['not_empty']
 ];
 
 $validator = new \MyClasses\Validation\Validator();
