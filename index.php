@@ -1,7 +1,7 @@
 <?php require_once $_SERVER['DOCUMENT_ROOT'] . '/bootstrap.php' ?>
 <?= get_partial('header.php') ?>
     <div class="jumbotron">
-        <h1>Welcome <?= isset($_SESSION['user']) ? $_SESSION['user']['first_name'] : 'No Name!' ?></h1>
+        <h1>Welcome <?= ($current_user) ? $current_user['first_name'] : 'No Name' ?>!</h1>
         <blockquote>
             Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptatem nobis similique in fugiat unde.
         </blockquote>
