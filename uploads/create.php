@@ -1,20 +1,26 @@
 <?php
 require_once $_SERVER['DOCUMENT_ROOT'] . '/bootstrap.php';
 
-$rules = [
-    'save_as' => ['not_empty']
-];
+$file  = $_FILES['file'];
+$title = $_POST['title'];
 
 $validator = new \MyClasses\Validation\Validator();
-$validator->validate($rules, $_POST);
-$validator->redirectWithErrorsIfFailed('/uploads/new.php');
+$rules     = [
+    'title' => ['not_empty'],
+    'file'  => ['image_upload_file']
+];
+$data                    = [
+    'title' => $title,
+    'file'  => $file
+];
+$validator->validate($rules, $data);
+if ($validator->getError('upload_image')) {
+    redirect_with_message('/uploads/index.php', $validator->getError('upload_image'));
+}
+$validator->redirectIfFailed('/uploads/index.php');
 
-$file = $_FILES['file'];
+$upload_id = \MyClasses\Models\Upload::createAndSave($file['tmp_name'], $file['name'], $file['type'], $file['size'], $title);
 
-$fname_dest = UPLOAD_DIR . $file['name'];
-
-move_uploaded_file($file['tmp_name'], $fname_dest);
-
-redirect_with_message('/uploads/new.php', 'File upload success!');
+redirect_with_message('/uploads/index.php', "{$file['name']} was uploaded!");
 
 ?>

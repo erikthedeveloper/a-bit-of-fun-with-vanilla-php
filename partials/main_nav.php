@@ -1,3 +1,34 @@
+<?php
+$links_logged_in  = [
+    '/logout.php' => 'Log Out'
+];
+$links_logged_out = [
+    '/users/new.php'   => 'Sign Up',
+    '/users/login.php' => 'Log In'
+];
+$links_general    = [
+    '/users/index.php' => 'Users',
+    '/uploads/index.php'   => 'Image Gallery'
+];
+$links_dropdown   = [
+    '/people/index.php'   => 'Top Secret',
+    '/people/index.php'   => 'P - Index',
+    '/people/new.php'     => 'P - New',
+    '/people/show.php'    => 'P - Show',
+    '/people/edit.php'    => 'P - Edit',
+    '/register_pet.php'   => 'Pet Form',
+    '/pets.php'           => 'Pets',
+    '/table.php'          => 'A Table',
+    '/multiplication.php' => 'Multiplication',
+    '/contact.php'        => 'Contact Form',
+];
+$links_primary = (\MyClasses\Auth\AuthMaster::checkIfLoggedIn())
+    ? $links_logged_in
+    : $links_logged_out;
+$links_primary = array_merge(
+    $links_primary, $links_general
+);
+?>
 <nav class="navbar navbar-default" role="navigation">
     <!-- Brand and toggle get grouped for better mobile display -->
     <div class="navbar-header">
@@ -15,18 +46,7 @@
         <ul class="nav navbar-nav navbar-right">
 
             <?php
-            $links = (\MyClasses\Auth\AuthMaster::checkIfLoggedIn())
-                ? ['/logout.php'     => 'Log Out' ]
-                : [ '/users/new.php' => 'Sign Up', '/users/login.php' => 'Log In'];
-            $links = array_merge($links, [
-                    '/users/index.php'  => 'Users',
-                    '/people/index.php' => 'Top Secret',
-                    '/people/index.php'   => 'P - Index',
-                    '/people/new.php'     => 'P - New',
-                    '/people/show.php'    => 'P - Show',
-                    '/people/edit.php'    => 'P - Edit',
-            ]);
-            foreach ($links as $href => $link_text): ?>
+            foreach ($links_primary as $href => $link_text): ?>
                 <li class="<?= strpos($_SERVER['REQUEST_URI'], preg_replace('/\.php/', '', trim($href, "/"))) ? 'active' : '' ?>">
                     <a href="<?= $href ?>"><?= $link_text ?></a>
                 </li>
@@ -36,14 +56,7 @@
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">Old Pages <span class="caret"></span></a>
                 <ul class="dropdown-menu" role="menu">
                     <?php
-                    $links = [
-                        '/register_pet.php'   => 'Pet Form',
-                        '/pets.php'           => 'Pets',
-                        '/table.php'          => 'A Table',
-                        '/multiplication.php' => 'Multiplication',
-                        '/contact.php'        => 'Contact Form',
-                    ];
-                    foreach ($links as $href => $link_text): ?>
+                    foreach ($links_dropdown as $href => $link_text): ?>
                         <li class="<?= strpos($_SERVER['REQUEST_URI'], preg_replace('/\.php/', '', trim($href, "/"))) ? 'active' : '' ?>">
                             <a href="<?= $href ?>"><?= $link_text ?></a>
                         </li>

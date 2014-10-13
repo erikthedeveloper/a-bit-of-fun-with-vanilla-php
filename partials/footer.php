@@ -9,8 +9,10 @@
     <?php endif ?>
 </footer>
 <!-- Scripts -->
-<script src="//code.jquery.com/jquery.js"></script>
-<script src="//netdna.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+<script src="/assets/jquery.js"></script>
+<script src="/assets/bootstrap.min.js"></script>
+<script type="text/javascript" src="/assets/slick/slick/slick.min.js"></script>
+<script type="text/javascript" src="/assets/main.js"></script>
 </body>
 </html>
 <?php

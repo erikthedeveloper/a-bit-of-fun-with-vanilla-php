@@ -21,20 +21,96 @@ class Validator
      */
     protected $callable_prefix = 'validate';
 
+
     /**
-     * @param $rules
-     * @param $data
-     * @return bool
+     * @param array $rules
+     * @param array $data
+     * @return $this
      * @author Erik Aybar
      */
     public function validate(array $rules, array $data)
     {
-        foreach ($rules as $field_name => $callable_rules) {
-            foreach ($callable_rules as $callable_rule) {
-                $this->validateFieldUsingRule($callable_rule, $field_name, $data[$field_name]);
+        foreach ($rules as $field_name => $rule_names) {
+            foreach ($rule_names as $rule_name) {
+                /* @throws InvalidArgumentException */
+                $this->validateFieldUsingRuleNameOrClosure($data, $rule_name, $field_name);
             }
         }
         return $this;
+    }
+
+    /**
+     * @param array $data
+     * @param       $rule_name
+     * @param       $field_name
+     * @throws InvalidArgumentException
+     * @author Erik Aybar
+     */
+    public function validateFieldUsingRuleNameOrClosure(array $data, $rule_name, $field_name)
+    {
+        if (is_callable($rule_name)) {
+            $passes    = $rule_name($data[$field_name]);
+            $rule_name = 'custom validation';
+        } else {
+            /* @throws InvalidArgumentException */
+            $method_name = $this->getCallableMethodFromRuleName($rule_name);
+            $passes      = $this->$method_name($data[$field_name]);
+        }
+
+        if (!$passes) {
+            $this->addFailedFieldValidation($rule_name, $field_name);
+        }
+    }
+
+    /**
+     * @param $rule_name
+     * @return string
+     * @throws InvalidArgumentException
+     * @author Erik Aybar
+     */
+    public function getCallableMethodFromRuleName($rule_name)
+    {
+        $method_name = $this->translateRuleNameToMethodName($rule_name);
+        if (!method_exists($this, $method_name)) {
+            throw new InvalidArgumentException("{$rule_name} validation message does not exist");
+        }
+        return $method_name;
+    }
+
+    /**
+     * @param $rule_name
+     * @return string
+     * @author Erik Aybar
+     */
+    public function translateRuleNameToMethodName($rule_name)
+    {
+        $method_name = $this->callable_prefix . join(
+                '',
+                array_map(
+                    'ucfirst',
+                    explode('_', $rule_name)
+                )
+            );
+        return $method_name;
+    }
+
+    /**
+     * @param $rule_name
+     * @param $field_name
+     * @author Erik Aybar
+     */
+    public function addFailedFieldValidation($rule_name, $field_name, $message = null)
+    {
+        $this->failed_fields[$field_name] = $message ? $message : "Failed the " . str_replace('_', ' ', $rule_name) . " validation";
+    }
+
+    /**
+     * @return bool
+     * @author Erik Aybar
+     */
+    public function hasValidData()
+    {
+        return (!$this->hasErrors());
     }
 
     /**
@@ -46,13 +122,12 @@ class Validator
         return count($this->failed_fields) > 0;
     }
 
-    /**
-     * @return bool
-     * @author Erik Aybar
-     */
-    public function hasValidData()
+    public function getError($field_name)
     {
-        return (!$this->hasErrors());
+        if (!array_key_exists($field_name, $this->failed_fields)) {
+            return false;
+        }
+        return $this->failed_fields[$field_name];
     }
 
     /**
@@ -116,60 +191,28 @@ class Validator
      */
     public function validateEmail($data)
     {
-        return (bool) preg_match('/\w+@\w+\.\w+/', $data);
+        return (bool)preg_match('/\w+@\w+\.\w+/', $data);
     }
 
-    /**
-     * @param $callable_rule_name
-     * @param $field_name
-     * @param $data
-     * @author Erik Aybar
-     */
-    public function validateFieldUsingRule($callable_rule_name, $field_name, $data)
+    public function validateImageUploadFile(array $file)
     {
-        if (is_callable($callable_rule_name)) {
-            $passes = $callable_rule_name($data);
-            $callable_rule_name = 'custom validation';
-        } else {
-            $callable_method = $this->getCallableMethodFromRule($callable_rule_name);
-            $passes          = $this->$callable_method($data);
+        $file_validation_message = 'File validation failed.';
+
+        if (!in_array($file['type'], ['image/png', 'image/jpg', 'image/jpeg'])) {
+            $file_validation_message .= ' Invalid file type.';
         }
-        if (!$passes) {
-            $this->setFieldValidationFailed($field_name, $callable_rule_name);
+        if ($file['size'] > 2000000) {
+            $file_validation_message .= " File too large.";
         }
-    }
 
-    /**
-     * @param $callable_rule_name
-     * @return string
-     * @author Erik Aybar
-     */
-    public function getCallableMethodFromRule($callable_rule_name)
-    {
-        $callable_method = $this->translateRuleNameToMethodName($callable_rule_name);
-        if (!method_exists($this, $callable_method)) {
-            throw new InvalidArgumentException("{$callable_rule_name} validation message does not exist");
-        }
-        return $callable_method;
-    }
-
-    public function translateRuleNameToMethodName($rule_name)
-    {
-        $method_name = $this->callable_prefix . join('',
-            array_map('ucfirst',
-                explode('_', $rule_name)
-            )
-        );
-        return $method_name;
-    }
-
-    /**
-     * @param $field_name
-     * @param $callable_method
-     * @author Erik Aybar
-     */
-    public function setFieldValidationFailed($field_name, $callable_method)
-    {
-        $this->failed_fields[$field_name] = "Failed the " . str_replace('_', ' ', $callable_method) . " validation";
+        if (
+            !in_array($file['type'], ['image/png', 'image/jpg', 'image/jpeg'])
+            ||
+            $file['size'] > 2000000
+        ) {
+            $this->addFailedFieldValidation('image_upload_file', 'upload_image', $file_validation_message);
+            return false;
+        };
+        return true;
     }
 }
