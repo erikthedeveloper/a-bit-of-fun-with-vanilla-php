@@ -31,24 +31,8 @@ $validator->validate($rules, $data);
 if ($validator->hasErrors()) {
     redirect_with_message('/uploads/index.php', $file_validation_message);
 }
-//$validator->redirectWithErrorsIfFailed('/uploads/index.php');
 
-
-$upload_create_data = [
-    "original_filename" => $file['name'],
-    "file_type"         => $file['type'],
-    "file_size"         => $file['size'],
-    "title"             => $title
-];
-
-
-$upload_id = \MyClasses\Models\Upload::create($upload_create_data);
-$stored_filename = \MyClasses\Models\Upload::getHashedFiledNameFromFile($upload_id, $file);
-\MyClasses\Models\Upload::update($upload_id, ["stored_filename"   => $stored_filename]);
-$real_path_dest = \MyClasses\Models\Upload::getRealPathFromStoredName($stored_filename);
-//mkdir($new_dir);
-move_uploaded_file($file['tmp_name'], $real_path_dest);
-//chmod($file_path, 0644);
+$upload_id = \MyClasses\Models\Upload::createAndSave($file['tmp_name'], $file['name'], $file['type'], $file['size'], $title);
 
 redirect_with_message('/uploads/index.php', "{$file['name']} was uploaded!");
 
